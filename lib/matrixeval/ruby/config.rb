@@ -29,8 +29,7 @@ module Matrixeval
         main_factor.variants.map do |variant|
           mounts = [
                 "..:/app/:cached",
-                "#{variant.bundle_volume_name}:/bundle",
-                "./#{variant.gemfile_lock_file_name}:/app/Gemfile.lock"
+                "#{variant.bundle_volume_name}:/bundle"
           ] + main_factor.mounts
 
           yaml['services'][variant.docker_compose_service_name] = {

@@ -2,17 +2,19 @@ module Matrixeval
   module Ruby
     class Variant
       class << self
-        def default(key)
-          self.new({"key" => key})
+        def default(key, factor)
+          self.new({"key" => key}, factor)
         end
       end
 
-      attr_reader :key, :image, :bundle_path
+      attr_reader :key, :image, :bundle_path, :env, :factor
 
-      def initialize(config = {})
+      def initialize(config = {}, factor)
+        @factor = factor
         @key = config["key"]
         @image = config["image"]
         @bundle_path = config["bundle_path"]
+        @env = config["env"] || []
       end
 
       def image
@@ -27,8 +29,8 @@ module Matrixeval
         "ruby_#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
       end
 
-      def gemfile_lock_file_name
-        "Gemfile.lock.ruby_#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
+      def pathname
+        "#{factor.pathname}_#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
       end
     end
   end

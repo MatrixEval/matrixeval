@@ -2,6 +2,7 @@ require 'optparse'
 require 'pathname'
 require 'fileutils'
 require 'matrixeval/ruby/config'
+require 'byebug'
 
 module Matrixeval
   module Ruby
@@ -25,26 +26,61 @@ module Matrixeval
         create_gemfile_spec_locks
 
         target_command_index = argv.index do |arg|
-          arg.in?(target_commands)
+          target_commands.include?(arg)
         end
         matrixeval_argv = ARGV[0...target_command_index]
-        # matrixeval_options = {}
-        # OptionParser.new do |opts|
-        #   opts.banner = "Usage: example.rb [options]"
 
-        #   config.factors.each do |factor|
-        #     opts.on("--#{factor.key}", "Set #{factor.key} version") do |v|
-        #       # options[:verbose] = v
-        #     end
-        #   end
-        # end.parse!(into: matrixeval_options)
+        matrixeval_options = {}
+        OptionParser.new do |opts|
+          opts.banner = "Usage: meval --[FACTOR_KEY] [FACTOR_CHOICE] [COMMAND] [COMMAND_OPTIONS]"
+
+          config.factors.each do |factor|
+            opts.on("--#{factor.key} [VERSION]", "Set #{factor.key} version") do |version|
+              matrixeval_options[factor.key] = version
+            end
+          end
+        end.parse!(matrixeval_argv, into: matrixeval_options)
+
+        docker_compose_service_name = config.main_factor.variants.find do |variant|
+          variant.key.to_s == matrixeval_options[:ruby]
+        end.docker_compose_service_name
+
+        target_variants = config.factors.map do |factor|
+          variant = factor.variants.find do |variant|
+            variant.key.to_s == matrixeval_options[factor.key]
+          end
+        end.flatten
+
+
+        env = target_variants.map do |variant|
+          variant.env.map do |k, v|
+            "-e #{k}=#{v}"
+          end
+        end.flatten.join(" ")
+
+        gemfile_mount = "-v ./.matrixeval/Gemfile.lock.#{target_variants.map(&:pathname).join("_")}:/app/Gemfile.lock"
+
+        docker_compose_command = <<~DOCKER_COMMAND
+          docker compose -f .matrixeval/docker-compose.yml \
+            run --rm \
+            #{env} \
+            #{gemfile_mount} \
+            #{docker_compose_service_name} \
+            #{ARGV[target_command_index..-1].join(" ")}
+          DOCKER_COMMAND
+        system(docker_compose_command)
       end
 
       private
 
       def create_gemfile_spec_locks
-        config.main_factor.variants.each do |variant|
-          FileUtils.touch Pathname.new(current_working_dir).join(".matrixeval/#{variant.gemfile_lock_file_name}")
+        main_factor_variants = config.main_factor.variants
+        other_factor_variants = config.factors.reject do |factor|
+          factor.main?
+        end.map(&:variants)
+
+        main_factor_variants.product(*other_factor_variants).each do |variants| 
+          FileUtils.touch Pathname.new(current_working_dir).join(".matrixeval/Gemfile.lock.#{variants.map(&:pathname).join("_")}")
         end
       end
 
@@ -82,7 +118,7 @@ module Matrixeval
       end
 
       def target_commands
-        ['rake', 'rspec']
+        ['rake', 'rspec', 'bundle']
       end
 
       def config
