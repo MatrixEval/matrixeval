@@ -27,13 +27,15 @@ module Matrixeval
         yaml['version'] = "3"
         yaml['services'] = {}
         main_factor.variants.map do |variant|
+          mounts = [
+                "..:/app/:cached",
+                "#{variant.bundle_volume_name}:/bundle",
+                "./#{variant.gemfile_lock_file_name}:/app/Gemfile.lock"
+          ] + main_factor.mounts
+
           yaml['services'][variant.docker_compose_service_name] = {
             "image" => variant.image,
-            "volumes" => [
-              "..:/app/:cached",
-              "#{variant.bundle_volume_name}:/bundle",
-              "./#{variant.gemfile_lock_file_name}:/app/Gemfile.lock"
-            ],
+            "volumes" => mounts,
             "environment" => {
               "BUNDLE_PATH" => "/bundle"
             },
@@ -41,7 +43,7 @@ module Matrixeval
           }
         end
         yaml['volumes'] = {}
-        main_factor.variants.map do |variant|
+        main_factor.variants.each do |variant|
           yaml['volumes'][variant.bundle_volume_name] = {
             'name' => variant.bundle_volume_name
           }
