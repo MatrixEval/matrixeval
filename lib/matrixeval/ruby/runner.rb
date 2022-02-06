@@ -1,7 +1,7 @@
 require 'optparse'
 require 'pathname'
 require 'fileutils'
-require 'matrixeval/config'
+require 'matrixeval/ruby/config'
 
 module Matrixeval
   module Ruby
