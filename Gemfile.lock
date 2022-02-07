@@ -1,0 +1,28 @@
+PATH
+  remote: .
+  specs:
+    matrixeval-ruby (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    byebug (11.1.3)
+    minitest (5.15.0)
+    minitest-focus (1.3.1)
+      minitest (>= 4, < 6)
+    mocha (1.13.0)
+    rake (13.0.6)
+
+PLATFORMS
+  x86_64-darwin-19
+
+DEPENDENCIES
+  byebug
+  matrixeval-ruby!
+  minitest (~> 5.0)
+  minitest-focus
+  mocha
+  rake (~> 13.0)
+
+BUNDLED WITH
+   2.2.32
