@@ -8,3 +8,4 @@
 /tmp/
 **/.DS_Store
 test/dummy_gem/matrixeval.yml
+.byebug_history
