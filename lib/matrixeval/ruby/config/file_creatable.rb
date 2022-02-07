@@ -9,6 +9,10 @@ module Matrixeval
           FileUtils.cp(template_path, path)
         end
 
+        def working_dir
+          Pathname.new(Dir.getwd)
+        end
+
         private
 
         def template_path
@@ -19,10 +23,6 @@ module Matrixeval
 
         def path
           working_dir.join("matrixeval.yml")
-        end
-
-        def working_dir
-          Pathname.new(Dir.getwd)
         end
 
       end
