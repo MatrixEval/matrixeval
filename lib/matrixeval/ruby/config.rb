@@ -1,9 +1,12 @@
 require 'yaml'
 require_relative "./vector"
+require_relative "./config/file_creatable"
 
 module Matrixeval
   module Ruby
     class Config
+      extend FileCreatable
+
       class << self
         def parse(path)
           yaml = YAML.load(File.read(path))
