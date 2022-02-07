@@ -2,15 +2,15 @@ module Matrixeval
   module Ruby
     class Variant
       class << self
-        def default(key, factor)
-          self.new({"key" => key}, factor)
+        def default(key, vector)
+          self.new({"key" => key}, vector)
         end
       end
 
-      attr_reader :key, :image, :bundle_path, :env, :factor
+      attr_reader :key, :image, :bundle_path, :env, :vector
 
-      def initialize(config = {}, factor)
-        @factor = factor
+      def initialize(config = {}, vector)
+        @vector = vector
         @key = config["key"]
         @image = config["image"]
         @bundle_path = config["bundle_path"]
@@ -30,7 +30,7 @@ module Matrixeval
       end
 
       def pathname
-        "#{factor.pathname}_#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
+        "#{vector.pathname}_#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
       end
     end
   end

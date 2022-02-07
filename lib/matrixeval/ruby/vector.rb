@@ -2,7 +2,7 @@ require_relative "./variant"
 
 module Matrixeval
   module Ruby
-    class Factor
+    class Vector
       attr_reader :key, :variants, :mounts
 
       def initialize(key, config)
