@@ -6,3 +6,8 @@ require "matrixeval/ruby"
 require "minitest/autorun"
 require "minitest/focus"
 require "mocha/minitest"
+require "support/path_helper"
+
+class MatrixevalTest < Minitest::Test
+  include MatrixevalTestSupport::PathHelper
+end

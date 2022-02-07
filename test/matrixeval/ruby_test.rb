@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class Matrixeval::RubyTest < Minitest::Test
+class Matrixeval::RubyTest < MatrixevalTest
 
   def test_that_it_has_a_version_number
     refute_nil ::Matrixeval::Ruby::VERSION
