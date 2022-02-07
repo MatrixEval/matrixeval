@@ -6,6 +6,11 @@ require 'matrixeval/ruby/runner'
 module Matrixeval
   module Ruby
     class Error < StandardError; end
+
+    module_function
+    def root
+      Pathname.new("#{__dir__}/../..")
+    end
   end
 
   module_function
