@@ -8,12 +8,14 @@ module Matrixeval
       def initialize(key, config)
         @key = key
         @mounts = config["mounts"] || []
-        @variants = config["variants"].map do |variant_config|
-          if variant_config.is_a?(Hash)
-            Variant.new(variant_config, self)
+        @variants = (config["variants"] || []).map do |variant_config|
+          config = if variant_config.is_a?(Hash)
+            variant_config
           else
-            Variant.default(variant_config, self)
+            { "key" => variant_config }
           end
+
+          Variant.new(config, self)
         end
       end
 
@@ -21,7 +23,7 @@ module Matrixeval
         key == "ruby"
       end
 
-      def pathname
+      def id
         "#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
       end
     end
