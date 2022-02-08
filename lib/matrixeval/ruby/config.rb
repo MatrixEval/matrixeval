@@ -42,7 +42,7 @@ module Matrixeval
         end
 
         def exclusions
-          YAML["exclude"]
+          YAML["exclude"] || []
         end
 
       end

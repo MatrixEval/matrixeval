@@ -16,6 +16,10 @@ module Matrixeval
               main_variant:  variants.find { |v| v.vector.main? },
               rest_variants: variants.reject { |v| v.vector.main? }
             )
+          end.select do |context|
+            Config.exclusions.none? do |exclusion|
+              context.match_exclusion?(exclusion)
+            end
           end
         end
 

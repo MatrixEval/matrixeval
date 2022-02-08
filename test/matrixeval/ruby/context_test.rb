@@ -91,6 +91,7 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
         @rails_6_variant
       ]
     ])
+    Matrixeval::Ruby::Config.stubs(:exclusions).returns([])
 
     contexts =  Matrixeval::Ruby::Context.all
 
@@ -98,6 +99,21 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
     assert contexts[0].is_a?(Matrixeval::Ruby::Context)
     assert_equal @ruby_3_variant, contexts[0].main_variant
     assert_equal [@rails_6_variant, @sidekiq_5_variant], contexts[0].rest_variants
+  end
+
+  def test_all_with_exclusions
+    Matrixeval::Ruby::Config.stubs(:variant_combinations).returns([
+      [
+        @ruby_3_variant,
+        @sidekiq_5_variant,
+        @rails_6_variant
+      ]
+    ])
+    Matrixeval::Ruby::Config.stubs(:exclusions).returns([{ "ruby" => "3.0", "rails" => "6.1" }])
+
+    contexts =  Matrixeval::Ruby::Context.all
+
+    assert_equal 0, contexts.count
   end
 
 end
