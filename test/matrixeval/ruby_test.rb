@@ -9,6 +9,6 @@ class Matrixeval::RubyTest < MatrixevalTest
   end
 
   def test_root
-    assert_match /matrixeval-ruby\/lib\/matrixeval\/\.\.\/\.\.$/, Matrixeval::Ruby.root.to_s
+    assert_match(/matrixeval-ruby\/lib\/matrixeval\/\.\.\/\.\.$/, Matrixeval::Ruby.root.to_s)
   end
 end
