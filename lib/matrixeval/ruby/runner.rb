@@ -27,6 +27,7 @@ module Matrixeval
           Config::YAML.create
           DockerCompose::YAML.create
           GemfileLocks.create
+          Gitignore.update
 
           context = Context.find_by_command_options!(command.context_options)
 

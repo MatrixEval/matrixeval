@@ -5,6 +5,7 @@ require 'matrixeval/ruby/docker_compose'
 require 'matrixeval/ruby/context'
 require 'matrixeval/ruby/gemfile_locks'
 require 'matrixeval/ruby/runner'
+require 'matrixeval/ruby/gitignore'
 
 module Matrixeval
   module Ruby

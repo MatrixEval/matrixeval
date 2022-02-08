@@ -9,4 +9,5 @@
 **/.DS_Store
 test/dummy_gem/matrixeval.yml
 test/dummy_gem/.matrixeval
+test/dummy_gem/.gitignore
 .byebug_history

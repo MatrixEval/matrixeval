@@ -9,6 +9,7 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
 
     FileUtils.rm(dummy_gem_docker_compose_file_path) rescue nil
     FileUtils.rm(dummy_gem_matrixeval_file_path) rescue nil
+    FileUtils.rm(dummy_gem_working_dir.join(".gitignore")) rescue nil
     FileUtils.rm Dir.glob(dummy_gem_working_dir.join(".matrixeval/Gemfile.lock.*"))
   end
 
