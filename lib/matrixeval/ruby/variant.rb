@@ -42,6 +42,11 @@ module Matrixeval
       def match_command_options?(options)
         options[vector.key] == key.to_s
       end
+
+      def ==(variant)
+        vector.key == variant.vector.key &&
+          key == variant.key
+      end
     end
   end
 end

@@ -68,4 +68,36 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
     refute variant.match_command_options?({"ruby" => '3.0'})
   end
 
+  def test_equal
+    v1 = Matrixeval::Ruby::Variant.new(
+      {"key" => 3.1},
+      Matrixeval::Ruby::Vector.new('ruby', {})
+    )
+    v2 = Matrixeval::Ruby::Variant.new(
+      {"key" => 3.1},
+      Matrixeval::Ruby::Vector.new('ruby', {})
+    )
+    assert v1 == v2
+  end
+
+  def test_equal_with_array
+    v1 = Matrixeval::Ruby::Variant.new(
+      {"key" => 3.1},
+      Matrixeval::Ruby::Vector.new('ruby', {})
+    )
+    v2 = Matrixeval::Ruby::Variant.new(
+      {"key" => 3.1},
+      Matrixeval::Ruby::Vector.new('ruby', {})
+    )
+    v3 = Matrixeval::Ruby::Variant.new(
+      {"key" => 7.0},
+      Matrixeval::Ruby::Vector.new('rails', {})
+    )
+    v4 = Matrixeval::Ruby::Variant.new(
+      {"key" => 7.0},
+      Matrixeval::Ruby::Vector.new('rails', {})
+    )
+    assert [v1, v3] == [v2, v4]
+  end
+
 end
