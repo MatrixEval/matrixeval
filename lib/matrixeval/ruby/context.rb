@@ -61,7 +61,7 @@ module Matrixeval
         variants.all? do |variant|
           vector_key = variant.vector.key
           if exclusion.key?(vector_key)
-            exclusion[vector_key] == variant.key
+            exclusion[vector_key].to_s == variant.key
           else
             true
           end

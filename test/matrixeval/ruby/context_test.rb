@@ -75,10 +75,10 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
   end
 
   def test_match_exclusion
-    assert @context.match_exclusion?({ "ruby" => "3.0", "rails" => "6.1" })
-    assert @context.match_exclusion?({ "ruby" => "3.0", "rails" => "6.1", "sidekiq" => "5.0" })
+    assert @context.match_exclusion?({ "ruby" => 3.0, "rails" => "6.1" })
+    assert @context.match_exclusion?({ "ruby" => "3.0", "rails" => 6.1, "sidekiq" => "5.0" })
     assert @context.match_exclusion?({ "rails" => "6.1", "sidekiq" => "5.0" })
-    refute @context.match_exclusion?({ "ruby" => "2.7", "rails" => "6.1" })
+    refute @context.match_exclusion?({ "ruby" => 2.7, "rails" => "6.1" })
     refute @context.match_exclusion?({ "sidekiq" => "6.0"})
     refute @context.match_exclusion?({})
   end
