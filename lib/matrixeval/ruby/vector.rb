@@ -26,6 +26,15 @@ module Matrixeval
       def id
         "#{key.to_s.gsub(/[^A-Za-z0-9]/,'_')}"
       end
+
+      def default_variant
+        variant = variants.find(&:default?)
+        if variant.nil?
+          raise Error.new("Please set a default variant for matrix #{vector.key}")
+        end
+
+        variant
+      end
     end
   end
 end

@@ -34,4 +34,18 @@ class Matrixeval::Ruby::VectorTest < MatrixevalTest
     assert_equal 'ruby_3_0', vector.id
   end
 
+  def test_default_variant
+    vector = Matrixeval::Ruby::Vector.new('ruby', {"variants" => [{"key" => "3.0", "default" => true}, { "key" => "3.1" }]})
+    variant = vector.default_variant
+    assert_equal "ruby", variant.vector.key
+    assert_equal "3.0", variant.key
+  end
+
+  def test_default_variant_on_missing_default
+    assert_raises "Please set a default variant for matrix ruby" do
+      config = {"variants" => [{"key" => "3.0"}, { "key" => "3.1" }]}
+      Matrixeval::Ruby::Vector.new('ruby', config).default_variant
+    end
+  end
+
 end
