@@ -1,8 +1,14 @@
+require_relative "./context/find_by_command_options"
+
 module Matrixeval
   module Ruby
     class Context
 
       class << self
+
+        def find_by_command_options!(options)
+          FindByCommandOptions.call(options)
+        end
 
         def all
           Config.variant_combinations.map do |variants|
