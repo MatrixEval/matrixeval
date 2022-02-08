@@ -43,6 +43,10 @@ class Matrixeval::Ruby::DockerCompose::YAMLTest < MatrixevalTest
           - bundle_ruby_3_0_0:/bundle
           environment:
             BUNDLE_PATH: "/bundle"
+            GEM_HOME: "/bundle"
+            BUNDLE_APP_CONFIG: "/bundle"
+            BUNDLE_BIN: "/bundle/bin"
+            PATH: "/app/bin:/bundle/bin:$PATH"
           working_dir: "/app"
         ruby_3_1:
           image: ruby:3.1.0
@@ -51,6 +55,10 @@ class Matrixeval::Ruby::DockerCompose::YAMLTest < MatrixevalTest
           - bundle_ruby_3_1_0:/bundle
           environment:
             BUNDLE_PATH: "/bundle"
+            GEM_HOME: "/bundle"
+            BUNDLE_APP_CONFIG: "/bundle"
+            BUNDLE_BIN: "/bundle/bin"
+            PATH: "/app/bin:/bundle/bin:$PATH"
           working_dir: "/app"
       volumes:
         bundle_ruby_3_0_0:

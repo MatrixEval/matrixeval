@@ -32,7 +32,11 @@ module Matrixeval
                 "image" => variant.image,
                 "volumes" => mounts(variant),
                 "environment" => {
-                  "BUNDLE_PATH" => "/bundle"
+                  "BUNDLE_PATH" => "/bundle",
+                  "GEM_HOME" => "/bundle",
+                  "BUNDLE_APP_CONFIG" => "/bundle",
+                  "BUNDLE_BIN" => "/bundle/bin",
+                  "PATH" => "/app/bin:/bundle/bin:$PATH"
                 },
                 "working_dir" => "/app"
               }
