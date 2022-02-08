@@ -10,13 +10,13 @@ module Matrixeval
       attr_reader :key, :image, :env, :vector, :default
 
       def initialize(config = {}, vector)
+        raise Error.new("Variant#key is missing") if config["key"].nil?
+
         @vector = vector
         @key = config["key"].to_s
         @image = config["image"]
         @env = config["env"] || {}
         @default = config["default"] || false
-
-        raise Error.new("Variant#key is missing") if @key.nil?
       end
 
       def bundle_volume_name

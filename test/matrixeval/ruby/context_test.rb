@@ -13,13 +13,13 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
     @sidekiq_5_variant = Matrixeval::Ruby::Variant.new(
       {
         "key" => "5.0",
-        "env" => [{"SIDEKIQ_VERSION" => "5.0.0"}]
+        "env" => {"SIDEKIQ_VERSION" => "5.0.0"}
       }, @sidekiq_vector)
 
     @rails_6_variant = Matrixeval::Ruby::Variant.new(
       {
         "key" => "6.1",
-        "env" => [{"RAILS_VERSION" => "6.1.0"}]
+        "env" => {"RAILS_VERSION" => "6.1.0"}
       }, @rails_vector)
 
     @context = Matrixeval::Ruby::Context.new(

@@ -10,7 +10,7 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
 
   def test_key
     variant = Matrixeval::Ruby::Variant.new({"key" => 3.1}, @vector)
-    assert_equal 3.1, variant.key
+    assert_equal "3.1", variant.key
   end
 
   def test_key_missing
@@ -21,12 +21,12 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
   
   def test_image
     variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
-    assert_equal 3.1, variant.key
+    assert_equal "3.1", variant.key
   end
 
   def test_env
     variant = Matrixeval::Ruby::Variant.new({"key" => 3.1}, @vector)
-    assert_equal {}, variant.env
+    assert_equal({}, variant.env)
   end
 
   def test_vector
