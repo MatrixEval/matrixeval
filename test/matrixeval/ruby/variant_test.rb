@@ -5,7 +5,7 @@ require "test_helper"
 class Matrixeval::Ruby::VariantTest < MatrixevalTest
 
   def setup
-    @vector = stub(id: 'ruby')
+    @vector = stub(id: 'ruby', key: 'ruby')
   end
 
   def test_key
@@ -52,6 +52,20 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
   def test_pathname
     variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
     assert_equal "ruby_3_1", variant.pathname
+  end
+
+  def test_default
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1}, @vector)
+    assert_equal false, variant.default?
+
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "default" => true}, @vector)
+    assert_equal true, variant.default?
+  end
+
+  def test_match_command_options
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "default" => true}, @vector)
+    assert variant.match_command_options?({"ruby" => '3.1'})
+    refute variant.match_command_options?({"ruby" => '3.0'})
   end
 
 end
