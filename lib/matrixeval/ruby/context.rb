@@ -35,7 +35,8 @@ module Matrixeval
       end
 
       def env
-        main_variant.env + rest_variants.map(&:env).flatten
+        rest_variants.map(&:env).reduce(&:merge)
+          .merge(main_variant.env)
       end
 
       def docker_compose_service_name

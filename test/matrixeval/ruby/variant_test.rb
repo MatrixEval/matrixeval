@@ -26,7 +26,7 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
 
   def test_env
     variant = Matrixeval::Ruby::Variant.new({"key" => 3.1}, @vector)
-    assert_equal [], variant.env
+    assert_equal {}, variant.env
   end
 
   def test_vector

@@ -47,10 +47,10 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
   end
 
   def test_env
-    expected_env = [
-      {"RAILS_VERSION" => "6.1.0"},
-      {"SIDEKIQ_VERSION" => "5.0.0"}
-    ]
+    expected_env = {
+      "RAILS_VERSION" => "6.1.0",
+      "SIDEKIQ_VERSION" => "5.0.0"
+    }
     assert_equal expected_env, @context.env
   end
 

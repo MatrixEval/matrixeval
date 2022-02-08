@@ -13,7 +13,7 @@ module Matrixeval
         @vector = vector
         @key = config["key"]
         @image = config["image"]
-        @env = config["env"] || []
+        @env = config["env"] || {}
         @default = config["default"] || false
 
         raise Error.new("Variant#key is missing") if @key.nil?
