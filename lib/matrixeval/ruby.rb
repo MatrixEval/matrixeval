@@ -2,6 +2,7 @@
 
 require_relative "ruby/version"
 require 'matrixeval/ruby/docker_compose'
+require 'matrixeval/ruby/context'
 require 'matrixeval/ruby/runner'
 
 module Matrixeval
