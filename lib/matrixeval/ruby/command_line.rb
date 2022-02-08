@@ -14,6 +14,10 @@ module Matrixeval
         argv[0] == 'init'
       end
 
+      def context_options
+        ParseContextArguments.call(context_arguments)
+      end
+
       def context_arguments
         argv[0...seperator_index]
       end

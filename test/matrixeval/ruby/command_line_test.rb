@@ -30,4 +30,14 @@ class Matrixeval::Ruby::CommandLineTest < MatrixevalTest
     assert_equal ["rake", "test"], command.rest_arguments
   end
 
+  def test_context_options
+    Matrixeval::Ruby::CommandLine::ParseContextArguments.expects(:call).with(["--ruby", "3.0"]).returns({ruby: "3.0"})
+
+    command = Matrixeval::Ruby::CommandLine.new([
+      "--ruby", "3.0",
+      "rake", "test"
+    ])
+    assert_equal({ruby: "3.0"}, command.context_options)
+  end
+
 end
