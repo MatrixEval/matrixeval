@@ -1,38 +1,51 @@
 require 'yaml'
 require_relative "./vector"
 require_relative "./config/yaml"
-require_relative "./config/file_creatable"
-require_relative "./config/docker_compose_file_creatable"
 
 module Matrixeval
   module Ruby
     class Config
-      extend FileCreatable
-      include DockerComposeFileCreatable
-
       class << self
-        def parse(path)
-          yaml = YAML.load(File.read(path))
-          new(yaml)
+
+        def yaml
+          @yaml ||= YAML.parse
         end
-      end
 
-      attr_reader :yaml, :version, :target, :vectors
-
-      def initialize(yaml)
-        @yaml = yaml
-        @version = yaml["version"]
-        @target = yaml["target"]
-        @vectors = yaml["matrix"].map do |key, vector_config|
-          Vector.new(key, vector_config)
+        def version
+          yaml["version"]
         end
+
+        def target
+          yaml["target"]
+        end
+
+        def vectors
+          @vectors = yaml["matrix"].map do |key, vector_config|
+            Vector.new(key, vector_config)
+          end
+        end
+
+        def main_vector
+          @main_vector ||= vectors.find(&:main?)
+        end
+
+        def rest_vectors
+          @rest_vectors ||= vectors.reject(&:main?)
+        end
+
+        def variant_combinations
+          @variant_combinations ||= main_vector_variants.product(*rest_vector_variants_matrix)
+        end
+
+        def main_vector_variants
+          main_vector.variants
+        end
+
+        def rest_vector_variants_matrix
+          rest_vectors.map(&:variants)
+        end
+
       end
-
-      def main_vector
-        vectors.find(&:main?)
-      end
-
-
     end
   end
 end

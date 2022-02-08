@@ -10,8 +10,6 @@ module Matrixeval
             FileUtils.cp(template_path, path)
           end
 
-          private
-
           def template_path
             Matrixeval::Ruby.root.join(
               "lib/matrixeval/ruby/templates/matrixeval.yml"
@@ -20,6 +18,10 @@ module Matrixeval
 
           def path
             Matrixeval.working_dir.join("matrixeval.yml")
+          end
+
+          def parse
+            ::YAML.load File.read(path)
           end
 
         end
