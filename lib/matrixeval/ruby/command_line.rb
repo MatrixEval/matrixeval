@@ -1,3 +1,5 @@
+require_relative "./command_line/parse_context_arguments"
+
 module Matrixeval
   module Ruby
     class CommandLine
