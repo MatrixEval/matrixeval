@@ -1,5 +1,6 @@
 require 'yaml'
 require_relative "./vector"
+require_relative "./config/yaml"
 require_relative "./config/file_creatable"
 require_relative "./config/docker_compose_file_creatable"
 

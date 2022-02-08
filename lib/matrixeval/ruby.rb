@@ -17,4 +17,8 @@ module Matrixeval
   def start(argv)
     Ruby::Runner.start(argv)
   end
+
+  def working_dir
+    Pathname.new(Dir.getwd)
+  end
 end
