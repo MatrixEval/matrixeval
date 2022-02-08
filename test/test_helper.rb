@@ -7,6 +7,7 @@ require "minitest/autorun"
 require "minitest/focus"
 require "mocha/minitest"
 require "support/path_helper"
+require "byebug"
 
 class MatrixevalTest < Minitest::Test
   include MatrixevalTestSupport::PathHelper

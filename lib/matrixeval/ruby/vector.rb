@@ -6,13 +6,13 @@ module Matrixeval
       attr_reader :key, :variants, :mounts
 
       def initialize(key, config)
-        @key = key
+        @key = key.to_s
         @mounts = config["mounts"] || []
         @variants = (config["variants"] || []).map do |variant_config|
           config = if variant_config.is_a?(Hash)
             variant_config
           else
-            { "key" => variant_config }
+            { "key" => variant_config.to_s }
           end
 
           Variant.new(config, self)

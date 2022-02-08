@@ -31,11 +31,11 @@ module Matrixeval
       end
 
       def id
-        "#{main_variant.id}_#{rest_variants.map(&:id).join("_")}"
+        [[main_variant.id] + rest_variants.map(&:id)].join("_")
       end
 
       def env
-        rest_variants.map(&:env).reduce(&:merge)
+        rest_variants.map(&:env).reduce({}, &:merge)
           .merge(main_variant.env)
       end
 

@@ -22,15 +22,15 @@ module Matrixeval
         end
 
         def main_vector
-          @main_vector ||= vectors.find(&:main?)
+          vectors.find(&:main?)
         end
 
         def rest_vectors
-          @rest_vectors ||= vectors.reject(&:main?)
+          vectors.reject(&:main?)
         end
 
         def variant_combinations
-          @variant_combinations ||= main_vector_variants.product(*rest_vector_variants_matrix)
+          main_vector_variants.product(*rest_vector_variants_matrix)
         end
 
         def main_vector_variants

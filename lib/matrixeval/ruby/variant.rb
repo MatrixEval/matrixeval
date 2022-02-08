@@ -11,7 +11,7 @@ module Matrixeval
 
       def initialize(config = {}, vector)
         @vector = vector
-        @key = config["key"]
+        @key = config["key"].to_s
         @image = config["image"]
         @env = config["env"] || {}
         @default = config["default"] || false
