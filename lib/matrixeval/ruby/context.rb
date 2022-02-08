@@ -51,6 +51,19 @@ module Matrixeval
         [main_variant] + rest_variants
       end
 
+      def match_exclusion?(exclusion)
+        return false if exclusion.empty?
+
+        variants.all? do |variant|
+          vector_key = variant.vector.key
+          if exclusion.key?(vector_key)
+            exclusion[vector_key] == variant.key
+          else
+            true
+          end
+        end
+      end
+
     end
   end
 end
