@@ -7,20 +7,16 @@ module Matrixeval
     class Config
       class << self
 
-        def yaml
-          @yaml ||= YAML.parse
-        end
-
         def version
-          yaml["version"]
+          YAML["version"]
         end
 
         def target
-          yaml["target"]
+          YAML["target"]
         end
 
         def vectors
-          @vectors = yaml["matrix"].map do |key, vector_config|
+          @vectors = YAML["matrix"].map do |key, vector_config|
             Vector.new(key, vector_config)
           end
         end

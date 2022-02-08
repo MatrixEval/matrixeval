@@ -27,4 +27,32 @@ class Matrixeval::Ruby::Config::YAMLTest < MatrixevalTest
     assert_equal "Customizations\n", File.read(dummy_gem_matrixeval_file_path)
   end
 
+  def test_square_brackets
+    yaml_content = {
+      "version" => "0.1",
+      "target" => "ruby",
+      "matrix" => {
+        "ruby" => {
+          "variants" => [
+            { "key" => "3.0" },
+            { "key" => "3.1" }
+          ]
+        },
+        "active_model" => {
+          "variants" => [
+            { "key" => "6.1" },
+            { "key" => "7.0" }
+          ]
+        }
+      }
+    }
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns(yaml_content)
+    assert_equal "0.1", Matrixeval::Ruby::Config::YAML["version"]
+    assert_equal "ruby", Matrixeval::Ruby::Config::YAML["target"]
+    assert_equal "3.0", Matrixeval::Ruby::Config::YAML["matrix"]["ruby"]["variants"][0]["key"]
+    assert_equal "3.1", Matrixeval::Ruby::Config::YAML["matrix"]["ruby"]["variants"][1]["key"]
+    assert_equal "6.1", Matrixeval::Ruby::Config::YAML["matrix"]["active_model"]["variants"][0]["key"]
+    assert_equal "7.0", Matrixeval::Ruby::Config::YAML["matrix"]["active_model"]["variants"][1]["key"]
+  end
+
 end

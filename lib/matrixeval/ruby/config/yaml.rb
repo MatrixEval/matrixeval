@@ -20,7 +20,11 @@ module Matrixeval
             Matrixeval.working_dir.join("matrixeval.yml")
           end
 
-          def parse
+          def [](key)
+            yaml[key]
+          end
+
+          def yaml
             ::YAML.load File.read(path)
           end
 

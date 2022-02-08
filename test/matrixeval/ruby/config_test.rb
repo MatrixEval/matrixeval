@@ -5,7 +5,7 @@ require "test_helper"
 class Matrixeval::Ruby::ConfigTest < MatrixevalTest
 
   def setup
-    Matrixeval::Ruby::Config::YAML.stubs(:parse).returns({
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
       "version" => "0.1",
       "target" => "ruby",
       "matrix" => {
@@ -23,28 +23,6 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
         }
       }
     })
-  end
-
-  def test_yaml
-    yaml_content = {
-      "version" => "0.1",
-      "target" => "ruby",
-      "matrix" => {
-        "ruby" => {
-          "variants" => [
-            { "key" => "3.0" },
-            { "key" => "3.1" }
-          ]
-        },
-        "active_model" => {
-          "variants" => [
-            { "key" => "6.1" },
-            { "key" => "7.0" }
-          ]
-        }
-      }
-    }
-    assert_equal yaml_content, Matrixeval::Ruby::Config.yaml
   end
 
   def test_version
