@@ -19,6 +19,10 @@ module Matrixeval
         @default = config["default"] || false
       end
 
+      def name
+        "#{vector.key}: #{key}"
+      end
+
       def bundle_volume_name
         "bundle_#{image.gsub(/[^A-Za-z0-9]/,'_')}"
       end

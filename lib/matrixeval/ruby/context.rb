@@ -34,6 +34,10 @@ module Matrixeval
         end
       end
 
+      def name
+        variants.map(&:name).join(", ")
+      end
+
       def id
         [[main_variant.id] + rest_variants.map(&:id)].join("_")
       end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "ruby/version"
+require 'rainbow'
 require 'matrixeval/ruby/docker_compose'
 require 'matrixeval/ruby/context'
 require 'matrixeval/ruby/gemfile_locks'

@@ -12,6 +12,10 @@ module Matrixeval
       end
 
       def run(arguments)
+        forward_arguments = arguments.join(" ")
+        puts Rainbow("[ MatrixEval ] ").blue.bright + Rainbow(" #{context.name} ").white.bright.bg(:blue)
+        puts Rainbow("[ MatrixEval ] Run \"#{forward_arguments}\"").blue.bright
+
         system(
           <<~DOCKER_COMPOSE_COMMAND
           docker compose -f .matrixeval/docker-compose.yml \
@@ -19,7 +23,7 @@ module Matrixeval
           #{env} \
           #{gemfile_mount} \
           #{docker_compose_service_name} \
-          #{arguments.join(" ")}
+          #{forward_arguments}
           DOCKER_COMPOSE_COMMAND
         )
       end
