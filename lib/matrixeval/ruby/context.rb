@@ -2,6 +2,19 @@ module Matrixeval
   module Ruby
     class Context
 
+      class << self
+
+        def all
+          Config.variant_combinations.map do |variants|
+            Context.new(
+              main_variant:  variants.find { |v| v.vector.main? },
+              rest_variants: variants.reject { |v| v.vector.main? }
+            )
+          end
+        end
+
+      end
+
       attr_reader :main_variant, :rest_variants
 
       def initialize(main_variant:, rest_variants:)

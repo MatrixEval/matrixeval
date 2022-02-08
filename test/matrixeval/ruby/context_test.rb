@@ -5,24 +5,26 @@ require "test_helper"
 class Matrixeval::Ruby::ContextTest < MatrixevalTest
 
   def setup
-    ruby_vector = Matrixeval::Ruby::Vector.new("ruby", {"key" => "ruby"})
-    sidekiq_vector = Matrixeval::Ruby::Vector.new("sidekiq", {"key" => "sidekiq"})
-    rails_vector = Matrixeval::Ruby::Vector.new("rails", {"key" => "rails"})
+    @ruby_vector = Matrixeval::Ruby::Vector.new("ruby", {"key" => "ruby"})
+    @sidekiq_vector = Matrixeval::Ruby::Vector.new("sidekiq", {"key" => "sidekiq"})
+    @rails_vector = Matrixeval::Ruby::Vector.new("rails", {"key" => "rails"})
+
+    @ruby_3_variant = Matrixeval::Ruby::Variant.new({"key" => "3.0"}, @ruby_vector)
+    @sidekiq_5_variant = Matrixeval::Ruby::Variant.new(
+      {
+        "key" => "5.0",
+        "env" => [{"SIDEKIQ_VERSION" => "5.0.0"}]
+      }, @sidekiq_vector)
+
+    @rails_6_variant = Matrixeval::Ruby::Variant.new(
+      {
+        "key" => "6.1",
+        "env" => [{"RAILS_VERSION" => "6.1.0"}]
+      }, @rails_vector)
 
     @context = Matrixeval::Ruby::Context.new(
-      main_variant: Matrixeval::Ruby::Variant.new({"key" => "3.0"}, ruby_vector),
-      rest_variants: [
-        Matrixeval::Ruby::Variant.new(
-          {
-            "key" => "5.0",
-            "env" => [{"SIDEKIQ_VERSION" => "5.0.0"}]
-          }, sidekiq_vector),
-        Matrixeval::Ruby::Variant.new(
-          {
-            "key" => "6.1",
-            "env" => [{"RAILS_VERSION" => "6.1.0"}]
-          }, rails_vector)
-      ]
+      main_variant: @ruby_3_variant,
+      rest_variants: [@sidekiq_5_variant, @rails_6_variant]
     )
   end
 
@@ -70,6 +72,23 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
     assert_equal "6.1", @context.variants[1].key
     assert_equal "sidekiq", @context.variants[2].vector.key
     assert_equal "5.0", @context.variants[2].key
+  end
+
+  def test_all
+    Matrixeval::Ruby::Config.stubs(:variant_combinations).returns([
+      [
+        @ruby_3_variant,
+        @sidekiq_5_variant,
+        @rails_6_variant
+      ]
+    ])
+
+    contexts =  Matrixeval::Ruby::Context.all
+
+    assert_equal 1, contexts.count
+    assert contexts[0].is_a?(Matrixeval::Ruby::Context)
+    assert_equal @ruby_3_variant, contexts[0].main_variant
+    assert_equal [@rails_6_variant, @sidekiq_5_variant], contexts[0].rest_variants
   end
 
 end
