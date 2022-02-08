@@ -23,6 +23,7 @@ module Matrixeval
         command = CommandLine.new(argv)
         if command.init?
           Config::YAML.create
+          Gitignore.update
         else
           Config::YAML.create
           DockerCompose::YAML.create
