@@ -41,6 +41,10 @@ module Matrixeval
           rest_vectors.map(&:variants)
         end
 
+        def exclusions
+          YAML["exclude"]
+        end
+
       end
     end
   end

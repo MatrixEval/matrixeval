@@ -21,7 +21,11 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
             { "key" => "7.0" }
           ]
         }
-      }
+      },
+      "exclude" => [
+        { "ruby" => "3.0", "active_model" => "7.0" },
+        { "ruby" => "3.1", "active_model" => "6.1" }
+      ]
     })
   end
 
@@ -68,6 +72,14 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
     assert_equal 2, variants_matrix[0].count
     assert_equal "6.1", variants_matrix[0][0].key
     assert_equal "7.0", variants_matrix[0][1].key
+  end
+
+  def test_exclusions
+    exclusions = [
+      { "ruby" => "3.0", "active_model" => "7.0" },
+      { "ruby" => "3.1", "active_model" => "6.1" }
+    ]
+    assert_equal exclusions, Matrixeval::Ruby::Config.exclusions
   end
 
 end
