@@ -45,6 +45,10 @@ module Matrixeval
           YAML["exclude"] || []
         end
 
+        def parallel_workers
+          YAML["parallel_workers"] || "number_of_processors"
+        end
+
       end
     end
   end

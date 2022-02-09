@@ -1,5 +1,6 @@
 version: 0.1
 target: ruby
+parallel_workers: number_of_processors
 matrix:
   ruby:
     variants:

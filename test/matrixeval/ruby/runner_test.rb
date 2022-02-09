@@ -42,6 +42,7 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
       file.puts(<<~MATRIXEVAL_YAML
         version: 0.1
         target: ruby
+        parallel_workers: 1
         matrix:
           ruby:
             variants:

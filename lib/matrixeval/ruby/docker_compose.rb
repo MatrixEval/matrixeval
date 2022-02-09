@@ -13,8 +13,6 @@ module Matrixeval
 
       def run(arguments)
         forward_arguments = arguments.join(" ")
-        puts Rainbow("[ MatrixEval ] ").blue.bright + Rainbow(" #{context.name} ").white.bright.bg(:blue)
-        puts Rainbow("[ MatrixEval ] Run \"#{forward_arguments}\"").blue.bright
 
         system(
           <<~DOCKER_COMPOSE_COMMAND

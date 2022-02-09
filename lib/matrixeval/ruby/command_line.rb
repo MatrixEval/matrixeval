@@ -39,7 +39,7 @@ module Matrixeval
       end
 
       def seperator_commands
-        ['rake', 'rspec', 'bundle']
+        ['rake', 'rspec', 'bundle', 'bash']
       end
 
     end
