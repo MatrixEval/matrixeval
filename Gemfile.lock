@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    matrixeval-ruby (0.1.0)
+    matrixeval-ruby (0.1.1)
       concurrent-ruby
       rainbow (~> 3.1)
       terminal-table
