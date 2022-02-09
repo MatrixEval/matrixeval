@@ -12,6 +12,14 @@ class Matrixeval::Ruby::CommandLineTest < MatrixevalTest
     refute command.init?
   end
 
+  def test_all?
+    command = Matrixeval::Ruby::CommandLine.new(["all", "rake", "test"])
+    assert command.all?
+
+    command = Matrixeval::Ruby::CommandLine.new(["rake", "test"])
+    refute command.all?
+  end
+
   def test_context_arguments
     command = Matrixeval::Ruby::CommandLine.new([
       "--ruby", "3.0",
