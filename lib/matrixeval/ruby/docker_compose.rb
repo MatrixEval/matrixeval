@@ -32,7 +32,7 @@ module Matrixeval
 
       def env
         context.env.map do |k, v|
-          "-e #{k}=#{v}"
+          "-e #{k}='#{v}'"
         end.join(" ")
       end
 

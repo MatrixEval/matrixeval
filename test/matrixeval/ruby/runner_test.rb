@@ -75,8 +75,8 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
     Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND
       docker compose -f .matrixeval/docker-compose.yml \
       run --rm \
-      -e RAILS_VERSION=6.0.0 \
-      -e SIDEKIQ_VERSION=5.0.0 \
+      -e RAILS_VERSION='6.0.0' \
+      -e SIDEKIQ_VERSION='5.0.0' \
       -v ./.matrixeval/Gemfile.lock.ruby_3_0_rails_6_0_sidekiq_5_0:/app/Gemfile.lock \
       ruby_3_0 \
       rake test

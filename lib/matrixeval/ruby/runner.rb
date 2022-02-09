@@ -30,10 +30,17 @@ module Matrixeval
           GemfileLocks.create
           Gitignore.update
 
-          context = Context.find_by_command_options!(command.context_options)
+          if command.all?
+            Context.all.each do |context|
+              docker_compose = DockerCompose.new(context)
+              docker_compose.run(command.rest_arguments)
+            end
+          else
+            context = Context.find_by_command_options!(command.context_options)
 
-          docker_compose = DockerCompose.new(context)
-          docker_compose.run(command.rest_arguments)
+            docker_compose = DockerCompose.new(context)
+            docker_compose.run(command.rest_arguments)
+          end
         end
       end
 
