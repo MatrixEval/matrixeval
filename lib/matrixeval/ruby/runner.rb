@@ -62,7 +62,7 @@ module Matrixeval
           docker_compose = DockerCompose.new(context)
           success = docker_compose.run(command.rest_arguments)
 
-          matrixeval_results << [context, !!success]
+          self.matrixeval_results << [context, !!success]
         end
 
         report
@@ -132,7 +132,7 @@ module Matrixeval
         threads.each(&:join)
 
         threads.each do |thread|
-          matrixeval_results += thread[:matrixeval_results]
+          self.matrixeval_results += thread[:matrixeval_results]
         end
       end
 
@@ -142,6 +142,10 @@ module Matrixeval
 
       def matrixeval_results
         @matrixeval_results ||= []
+      end
+
+      def matrixeval_results=(results)
+        @matrixeval_results = results
       end
 
       def workers_count
