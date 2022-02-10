@@ -19,7 +19,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Initialize
+
+```bash
+matrixeval init
+```
+
+Customize `matrixeval.yml` file and run commands like:
+
+```bash
+matrixeval --all bundle install
+matrixeval --all rspec
+matrixeval --ruby 3.0 rspec a_spec.rb
+matrixeval --ruby 3.1 --rails 7.0 rake test
+matrixeval bash
+```
+Run `matrixeval --help` for more details
 
 ## Development
 
