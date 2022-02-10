@@ -1,8 +1,14 @@
 version: 0.1
 target: ruby
 parallel_workers: number_of_processors
+# commands:
+#   - ps
+#   - top
+#   - an_additional_command
 matrix:
   ruby:
+    # mounts:
+    #   - /a/path/need/to/mount:/a/path/mount/to
     variants:
       - key: 2.7
         container:
@@ -14,3 +20,33 @@ matrix:
       - key: 3.1
         container:
           image: ruby:3.1.0
+      # - key: jruby-9.3
+      #   container:
+      #     image: jruby:9.3
+      #     env:
+      #       PATH: "/opt/jruby/bin:/app/bin:/bundle/bin:$PATH"
+
+  # rails:
+  #   variants:
+  #     - key: 6.1
+  #       default: true
+  #       env:
+  #         RAILS_VERSION: "~> 6.1.0"
+  #     - key: 7.0
+  #       env:
+  #         RAILS_VERSION: "~> 7.0.0"
+  # another:
+  #   variants:
+  #     - key: key1
+  #       default: true
+  #       env:
+  #         ENV_KEY: 1
+  #     - key: key2
+  #       env:
+  #         ENV_KEY: 2
+
+exclude:
+  # - ruby: 3.0
+  #   rails: 4.2
+  # - ruby: jruby-9.3
+  #   rails: 7.0
