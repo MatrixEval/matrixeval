@@ -2,6 +2,9 @@ module Matrixeval
   module Ruby
     class Config
       class YAML
+
+        class MissingError < StandardError; end
+
         class << self
 
           def create
@@ -25,6 +28,8 @@ module Matrixeval
           end
 
           def yaml
+            raise MissingError unless File.exist?(path)
+
             ::YAML.load File.read(path)
           end
 

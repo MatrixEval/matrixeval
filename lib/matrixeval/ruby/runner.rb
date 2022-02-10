@@ -38,6 +38,9 @@ module Matrixeval
           See 'matrixeval --help'
           ERROR
         exit
+      rescue Config::YAML::MissingError
+        puts "Please run 'matrixeval init' first to generate matrixeval.yml"
+        exit
       ensure
         turn_on_stty_opost
       end
