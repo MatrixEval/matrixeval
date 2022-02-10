@@ -29,7 +29,7 @@ class Matrixeval::Ruby::Config::YAMLTest < MatrixevalTest
 
   def test_square_brackets
     yaml_content = {
-      "version" => "0.1",
+      "version" => "0.2",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {
@@ -47,7 +47,7 @@ class Matrixeval::Ruby::Config::YAMLTest < MatrixevalTest
       }
     }
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns(yaml_content)
-    assert_equal "0.1", Matrixeval::Ruby::Config::YAML["version"]
+    assert_equal "0.2", Matrixeval::Ruby::Config::YAML["version"]
     assert_equal "ruby", Matrixeval::Ruby::Config::YAML["target"]
     assert_equal "3.0", Matrixeval::Ruby::Config::YAML["matrix"]["ruby"]["variants"][0]["key"]
     assert_equal "3.1", Matrixeval::Ruby::Config::YAML["matrix"]["ruby"]["variants"][1]["key"]

@@ -6,7 +6,7 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
 
   def setup
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
-      "version" => "0.1",
+      "version" => "0.2",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {
@@ -30,7 +30,7 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
   end
 
   def test_version
-    assert_equal "0.1", Matrixeval::Ruby::Config.version
+    assert_equal "0.2", Matrixeval::Ruby::Config.version
   end
 
   def test_target

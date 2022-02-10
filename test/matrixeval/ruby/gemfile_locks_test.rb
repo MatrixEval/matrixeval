@@ -11,7 +11,7 @@ class Matrixeval::Ruby::GemfileLocksTest < MatrixevalTest
 
   def test_create
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
-      "version" => "0.1",
+      "version" => "0.2",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {

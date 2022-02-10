@@ -13,7 +13,7 @@ class Matrixeval::Ruby::DockerCompose::YAMLTest < MatrixevalTest
     refute File.exist?(dummy_gem_docker_compose_file_path)
 
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
-      "version" => "0.1",
+      "version" => "0.2",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {
