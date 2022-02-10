@@ -16,10 +16,13 @@ module Matrixeval
       end
 
       attr_reader :argv, :command
+      attr_accessor :threads, :matrixeval_results
 
       def initialize(argv)
         @argv = argv
         @command = CommandLine.new(argv)
+        @threads ||= []
+        @matrixeval_results ||= []
       end
 
       def start
@@ -68,6 +71,8 @@ module Matrixeval
         GemfileLocks.create
         Gitignore.update
 
+        pull_all_images
+
         if workers_count == 1
           run_all_contexts_sequentially
         else
@@ -90,10 +95,10 @@ module Matrixeval
       end
 
       def run_all_contexts_in_parallel
-        parallel do |contexts|
+        parallel(contexts) do |sub_contexts|
           Thread.current[:matrixeval_results] = []
 
-          contexts.each do |context|
+          sub_contexts.each do |context|
             docker_compose = DockerCompose.new(context)
             success = docker_compose.run(command.rest_arguments)
 
@@ -119,6 +124,18 @@ module Matrixeval
         docker_compose.run(command.rest_arguments)
       end
 
+      def pull_all_images
+        parallel(Config.main_vector_variants) do |sub_variants|
+          sub_variants.each do |variant|
+            puts "Docker image check/pull #{variant.container.image}"
+            image_exists = system %Q{[ -n "$(docker images -q #{variant.container.image})" ]}
+            next if image_exists
+
+            system "docker pull #{variant.container.image}"
+          end
+        end
+      end
+
       def report
         turn_on_stty_opost
 
@@ -142,33 +159,30 @@ module Matrixeval
         puts table
       end
 
-      def parallel
-        contexts = Context.all
+      def parallel(collection)
+        threads = []
+        matrixeval_results = []
 
-        per_worker_contexts_count = [(contexts.count / workers_count), 1].max
-        contexts.each_slice(per_worker_contexts_count) do |sub_contexts|
+        collection.each_slice(per_worker_contexts_count) do |sub_collection|
           threads << Thread.new do
-            yield sub_contexts
+            yield sub_collection
           end
         end
 
         threads.each(&:join)
 
         threads.each do |thread|
-          self.matrixeval_results += thread[:matrixeval_results]
+          self.matrixeval_results += (thread[:matrixeval_results] || [])
         end
       end
 
-      def threads
-        @threads ||= []
+
+      def per_worker_contexts_count
+        [(contexts.count / workers_count), 1].max
       end
 
-      def matrixeval_results
-        @matrixeval_results ||= []
-      end
-
-      def matrixeval_results=(results)
-        @matrixeval_results = results
+      def contexts
+        @contexts ||= Context.all
       end
 
       def workers_count
