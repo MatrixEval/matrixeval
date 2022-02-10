@@ -121,7 +121,8 @@ module Matrixeval
 
         table = Terminal::Table.new(title: Rainbow("MatrixEval").blue.bright + " Summary", alignment: :center) do |table|
 
-          table.add_row(Config.vectors.map(&:key) + ['result'])
+          headers = Config.vectors.map(&:key) + ['result']
+          table.add_row headers.map { |value| { value: value, alignment: :center } }
           table.add_separator 
 
           matrixeval_results.each do |context, success|
