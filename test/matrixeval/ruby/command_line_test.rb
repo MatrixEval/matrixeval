@@ -13,7 +13,12 @@ class Matrixeval::Ruby::CommandLineTest < MatrixevalTest
   end
 
   def test_all?
-    command = Matrixeval::Ruby::CommandLine.new(["all", "rake", "test"])
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"matrix" => {}})
+
+    command = Matrixeval::Ruby::CommandLine.new(["--all", "rake", "test"])
+    assert command.all?
+
+    command = Matrixeval::Ruby::CommandLine.new(["-a", "rake", "test"])
     assert command.all?
 
     command = Matrixeval::Ruby::CommandLine.new(["rake", "test"])

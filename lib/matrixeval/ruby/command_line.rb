@@ -2,9 +2,11 @@ require_relative "./command_line/parse_context_arguments"
 
 module Matrixeval
   module Ruby
+    COMMANDS = ['rake', 'rspec', 'bundle', 'bash']
+
     class CommandLine
 
-      attr_reader :argv
+      attr_accessor :argv
 
       def initialize(argv)
         @argv = argv
@@ -15,15 +17,17 @@ module Matrixeval
       end
 
       def all?
-        argv[0] == 'all'
+        context_options[:all]
       end
 
       def context_options
-        ParseContextArguments.call(context_arguments)
+        @context_options ||= ParseContextArguments.call(context_arguments)
       end
 
       def context_arguments
-        argv[0...seperator_index]
+        arguments = argv[0...seperator_index]
+        arguments << "-h" if argv.empty?
+        arguments
       end
 
       def rest_arguments
@@ -34,12 +38,8 @@ module Matrixeval
 
       def seperator_index
         argv.index do |argument|
-          seperator_commands.include?(argument)
+          COMMANDS.include?(argument)
         end
-      end
-
-      def seperator_commands
-        ['rake', 'rspec', 'bundle', 'bash']
       end
 
     end
