@@ -23,6 +23,8 @@ module Matrixeval
       end
 
       def start
+        validates
+
         if command.init?
           init
         elsif command.all?
@@ -30,11 +32,27 @@ module Matrixeval
         else
           run_a_specific_context
         end
+      rescue OptionParser::InvalidOption => e
+        puts <<~ERROR
+          #{e.message}
+          See 'matrixeval --help'
+          ERROR
+        exit
       ensure
         turn_on_stty_opost
       end
 
       private
+
+      def validates
+        return if command.valid?
+
+        puts <<~ERROR
+          matrixeval: '#{argv.join(' ')}' is not a MatrixEval command.
+          See 'matrixeval --help'
+          ERROR
+        exit
+      end
 
       def init
         Config::YAML.create

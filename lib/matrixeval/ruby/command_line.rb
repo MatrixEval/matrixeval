@@ -12,6 +12,12 @@ module Matrixeval
         @argv = argv
       end
 
+      def valid?
+        init? ||
+          !context_options.empty? ||
+          !seperator_index.nil?
+      end
+
       def init?
         argv[0] == 'init'
       end
