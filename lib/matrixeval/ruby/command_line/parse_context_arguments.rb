@@ -50,7 +50,7 @@ module Matrixeval
             end
 
             opts.separator ""
-            opts.separator "Commands: #{COMMANDS.join("/")} (Customizable)"
+            opts.separator "Commands: #{Config.commands.join("/")} (Customizable)"
 
             opts.separator ""
             opts.separator "MatrixEval Options:"

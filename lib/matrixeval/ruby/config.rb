@@ -49,6 +49,11 @@ module Matrixeval
           YAML["parallel_workers"] || "number_of_processors"
         end
 
+        def commands
+          cmds = YAML["commands"] || []
+          COMMANDS + cmds
+        end
+
       end
     end
   end

@@ -4,6 +4,10 @@ require "test_helper"
 
 class Matrixeval::Ruby::CommandLineTest < MatrixevalTest
 
+  def setup
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"matrix" => {}})
+  end
+
   def test_init?
     command = Matrixeval::Ruby::CommandLine.new(["init"])
     assert command.init?
@@ -13,8 +17,6 @@ class Matrixeval::Ruby::CommandLineTest < MatrixevalTest
   end
 
   def test_all?
-    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"matrix" => {}})
-
     command = Matrixeval::Ruby::CommandLine.new(["--all", "rake", "test"])
     assert command.all?
 

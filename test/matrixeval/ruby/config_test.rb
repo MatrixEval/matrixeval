@@ -82,4 +82,12 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
     assert_equal exclusions, Matrixeval::Ruby::Config.exclusions
   end
 
+  def test_commands
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({})
+    assert_equal ['rake', 'rspec', 'bundle', 'bash'], Matrixeval::Ruby::Config.commands
+
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({'commands' => ['ls']})
+    assert_equal ['rake', 'rspec', 'bundle', 'bash', 'ls'], Matrixeval::Ruby::Config.commands
+  end
+
 end

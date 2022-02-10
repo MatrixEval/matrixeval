@@ -38,7 +38,7 @@ module Matrixeval
 
       def seperator_index
         argv.index do |argument|
-          COMMANDS.include?(argument)
+          Config.commands.include?(argument)
         end
       end
 
