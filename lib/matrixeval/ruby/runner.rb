@@ -160,8 +160,8 @@ module Matrixeval
       end
 
       def parallel(collection)
-        threads = []
-        matrixeval_results = []
+        threads = [] unless threads.empty?
+        matrixeval_results = [] unless matrixeval_results.empty?
 
         collection.each_slice(per_worker_contexts_count) do |sub_collection|
           threads << Thread.new do
