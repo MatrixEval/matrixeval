@@ -1,3 +1,5 @@
+require_relative "./container"
+
 module Matrixeval
   module Ruby
     class Variant
@@ -7,14 +9,14 @@ module Matrixeval
         end
       end
 
-      attr_reader :key, :image, :env, :vector, :default
+      attr_reader :key, :env, :vector, :default, :container
 
       def initialize(config = {}, vector)
         raise Error.new("Variant#key is missing") if config["key"].nil?
 
         @vector = vector
         @key = config["key"].to_s
-        @image = config["image"]
+        @container = Container.new(config["container"])
         @env = config["env"] || {}
         @default = config["default"] || false
       end
@@ -24,7 +26,7 @@ module Matrixeval
       end
 
       def bundle_volume_name
-        "bundle_#{image.gsub(/[^A-Za-z0-9]/,'_')}"
+        "bundle_#{container.image.gsub(/[^A-Za-z0-9]/,'_')}"
       end
 
       def id

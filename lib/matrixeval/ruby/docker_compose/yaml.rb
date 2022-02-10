@@ -29,7 +29,7 @@ module Matrixeval
 
             Config.main_vector_variants.map do |variant|
               services[variant.docker_compose_service_name] = {
-                "image" => variant.image,
+                "image" => variant.container.image,
                 "volumes" => mounts(variant),
                 "environment" => {
                   "BUNDLE_PATH" => "/bundle",
@@ -37,7 +37,7 @@ module Matrixeval
                   "BUNDLE_APP_CONFIG" => "/bundle",
                   "BUNDLE_BIN" => "/bundle/bin",
                   "PATH" => "/app/bin:/bundle/bin:$PATH"
-                },
+                }.merge(variant.container.env),
                 "working_dir" => "/app"
               }
             end

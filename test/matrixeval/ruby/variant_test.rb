@@ -19,9 +19,10 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
     end
   end
   
-  def test_image
-    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
-    assert_equal "3.1", variant.key
+  def test_container
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "container" => { "image" => "ruby:3.1.0"} }, @vector)
+    assert variant.container.is_a?(Matrixeval::Ruby::Container)
+    assert_equal "ruby:3.1.0", variant.container.image
   end
 
   def test_env
@@ -35,22 +36,22 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
   end
 
   def test_bundle_volume_name
-    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "container" => { "image" => "ruby:3.1.0"} }, @vector)
     assert_equal "bundle_ruby_3_1_0", variant.bundle_volume_name
   end
 
   def test_id
-    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "container" => { "image" => "ruby:3.1.0"} }, @vector)
     assert_equal "ruby_3_1", variant.id
   end
 
   def test_docker_compose_service_name
-    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "container" => { "image" => "ruby:3.1.0"} }, @vector)
     assert_equal "ruby_3_1", variant.docker_compose_service_name
   end
 
   def test_pathname
-    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "image" => "ruby:3.1.0"}, @vector)
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "container" => { "image" => "ruby:3.1.0"} }, @vector)
     assert_equal "ruby_3_1", variant.pathname
   end
 

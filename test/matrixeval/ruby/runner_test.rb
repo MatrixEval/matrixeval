@@ -47,10 +47,12 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
           ruby:
             variants:
               - key: 3.0
-                image: ruby:3.0.0
+                container:
+                  image: ruby:3.0.0
                 default: true
               - key: 3.1
-                image: ruby:3.1.0
+                container:
+                  image: ruby:3.1.0
           rails:
             variants:
               - key: 6.0

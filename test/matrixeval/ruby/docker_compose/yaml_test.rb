@@ -18,14 +18,14 @@ class Matrixeval::Ruby::DockerCompose::YAMLTest < MatrixevalTest
       "matrix" => {
         "ruby" => {
           "variants" => [
-            { "key" => "3.0", "image" => "ruby:3.0.0" },
-            { "key" => "3.1", "image" => "ruby:3.1.0" },
+            { "key" => "3.0", "container" => { "image" => "ruby:3.0.0" } },
+            { "key" => "3.1", "container" => { "image" => "ruby:3.1.0" } }
           ]
         },
         "active_model" => {
           "variants" => [
             { "key" => "6.1", "env" => { "ACTIVE_MODEL_VERSION" => "6.1.4" } },
-            { "key" => "7.0", "env" => { "ACTIVE_MODEL_VERSION" => "7.0.0" } },
+            { "key" => "7.0", "env" => { "ACTIVE_MODEL_VERSION" => "7.0.0" } }
           ]
         }
       }

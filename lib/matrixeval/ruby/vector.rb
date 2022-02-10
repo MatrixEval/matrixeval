@@ -30,7 +30,7 @@ module Matrixeval
       def default_variant
         variant = variants.find(&:default?)
         if variant.nil?
-          raise Error.new("Please set a default variant for matrix #{vector.key}")
+          raise Error.new("Please set a default variant for matrix #{key}")
         end
 
         variant

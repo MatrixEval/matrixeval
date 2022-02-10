@@ -11,13 +11,13 @@ class Matrixeval::Ruby::CommandLine::ParseContextArgumentsTest < MatrixevalTest
       "matrix" => {
         "ruby" => {
           "variants" => [
-            { "key" => "3.0" },
+            { "key" => "3.0", "default" => true },
             { "key" => "3.1" }
           ]
         },
         "active_model" => {
           "variants" => [
-            { "key" => "6.1" },
+            { "key" => "6.1", "default" => true },
             { "key" => "7.0" }
           ]
         }
