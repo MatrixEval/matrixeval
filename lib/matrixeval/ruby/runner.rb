@@ -145,7 +145,8 @@ module Matrixeval
       def parallel
         contexts = Context.all
 
-        contexts.each_slice(contexts.count / workers_count) do |sub_contexts|
+        per_worker_contexts_count = [(contexts.count / workers_count), 1].max
+        contexts.each_slice(per_worker_contexts_count) do |sub_contexts|
           threads << Thread.new do
             yield sub_contexts
           end
