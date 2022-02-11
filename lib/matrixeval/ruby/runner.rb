@@ -45,6 +45,7 @@ module Matrixeval
         exit
       ensure
         turn_on_stty_opost
+        DockerCompose.clean_containers
       end
 
       private

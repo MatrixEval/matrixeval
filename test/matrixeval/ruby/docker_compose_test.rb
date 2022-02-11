@@ -54,4 +54,9 @@ class Matrixeval::Ruby::DockerComposeTest < MatrixevalTest
     docker_compose.run(["rake", "test"])
   end
 
+  def test_clean_containers
+    Matrixeval::Ruby::DockerCompose.expects(:system).with("docker compose -f .matrixeval/docker-compose.yml rm --all -f >> /dev/null 2>&1")
+    Matrixeval::Ruby::DockerCompose.clean_containers
+  end
+
 end

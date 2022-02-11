@@ -5,6 +5,12 @@ module Matrixeval
   module Ruby
     class DockerCompose
 
+      class << self
+        def clean_containers
+          system("docker compose -f .matrixeval/docker-compose.yml rm --all -f >> /dev/null 2>&1")
+        end
+      end
+
       attr_reader :context
 
       def initialize(context)
