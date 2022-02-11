@@ -6,7 +6,7 @@ module Matrixeval
 
     class CommandLine
 
-      attr_accessor :argv
+      attr_reader :argv
 
       def initialize(argv)
         @argv = argv
@@ -19,7 +19,7 @@ module Matrixeval
       end
 
       def init?
-        argv[0] == 'init'
+        @argv[0] == 'init'
       end
 
       def all?
@@ -31,19 +31,19 @@ module Matrixeval
       end
 
       def context_arguments
-        arguments = argv[0...seperator_index]
-        arguments << "-h" if argv.empty?
+        arguments = @argv[0...seperator_index]
+        arguments << "-h" if @argv.empty?
         arguments
       end
 
       def rest_arguments
-        argv[seperator_index..-1]
+        @argv[seperator_index..-1]
       end
 
       private
 
       def seperator_index
-        argv.index do |argument|
+        @argv.index do |argument|
           Config.commands.include?(argument)
         end
       end

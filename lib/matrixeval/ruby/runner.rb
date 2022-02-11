@@ -16,7 +16,6 @@ module Matrixeval
       end
 
       attr_reader :argv, :command
-      attr_accessor :threads, :matrixeval_results
 
       def initialize(argv)
         @argv = argv
@@ -88,7 +87,7 @@ module Matrixeval
           docker_compose = DockerCompose.new(context)
           success = docker_compose.run(command.rest_arguments)
 
-          self.matrixeval_results << [context, !!success]
+          @matrixeval_results << [context, !!success]
         end
 
         report
@@ -145,7 +144,7 @@ module Matrixeval
           table.add_row headers.map { |value| { value: value, alignment: :center } }
           table.add_separator 
 
-          matrixeval_results.each do |context, success|
+          @matrixeval_results.each do |context, success|
             success_cell = [success ? Rainbow('Success').green : Rainbow('Failed').red]
             row = (context.variants.map(&:key) + success_cell).map do |value|
               { value: value, alignment: :center }
@@ -160,19 +159,19 @@ module Matrixeval
       end
 
       def parallel(collection)
-        threads = [] unless threads.empty?
-        matrixeval_results = [] unless matrixeval_results.empty?
+        @threads = [] unless @threads.empty?
+        @matrixeval_results = [] unless @matrixeval_results.empty?
 
         collection.each_slice(per_worker_contexts_count) do |sub_collection|
-          threads << Thread.new do
+          @threads << Thread.new do
             yield sub_collection
           end
         end
 
-        threads.each(&:join)
+        @threads.each(&:join)
 
-        threads.each do |thread|
-          self.matrixeval_results += (thread[:matrixeval_results] || [])
+        @threads.each do |thread|
+          @matrixeval_results += (thread[:matrixeval_results] || [])
         end
       end
 
