@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.2] - 2022-02-11
+
+- Auto remove containers
+
 ## [0.2.1] - 2022-02-11
 
 - Fix a assignment method issue
