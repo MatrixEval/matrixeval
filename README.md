@@ -1,6 +1,15 @@
 # matrixeval-ruby
 
 Test your ruby code against multiple versions of dependencies like Ruby, Rails, Env ...
+
+![](https://raw.githubusercontent.com/MatrixEval/assets/main/screenshots/summary.png)
+
+## Features
+
+- Parallel test your ruby code against multiple versions of dependencies combinations.
+- Test your ruby code against a specific dependencies combination.
+- Choose any docker image you like for each job.
+- Easy to use CLI to speed up your development efficiency
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -35,6 +44,65 @@ matrixeval --ruby 3.1 --rails 7.0 rake test
 matrixeval bash
 ```
 Run `matrixeval --help` for more details
+
+![](https://raw.githubusercontent.com/MatrixEval/assets/main/screenshots/help.png)
+
+### Configuration Example
+
+```yaml
+version: 0.2
+target: ruby
+parallel_workers: number_of_processors
+# commands:
+#   - ps
+#   - top
+#   - an_additional_command
+matrix:
+  ruby:
+    # mounts:
+    #   - /a/path/need/to/mount:/a/path/mount/to
+    variants:
+      - key: 2.7
+        container:
+          image: ruby:2.7.1
+      - key: 3.0
+        default: true
+        container:
+          image: ruby:3.0.0
+      - key: 3.1
+        container:
+          image: ruby:3.1.0
+      # - key: jruby-9.3
+      #   container:
+      #     image: jruby:9.3
+      #     env:
+      #       PATH: "/opt/jruby/bin:/app/bin:/bundle/bin:$PATH"
+
+  # rails:
+  #   variants:
+  #     - key: 6.1
+  #       default: true
+  #       env:
+  #         RAILS_VERSION: "~> 6.1.0"
+  #     - key: 7.0
+  #       env:
+  #         RAILS_VERSION: "~> 7.0.0"
+  # another:
+  #   variants:
+  #     - key: key1
+  #       default: true
+  #       env:
+  #         ENV_KEY: 1
+  #     - key: key2
+  #       env:
+  #         ENV_KEY: 2
+
+exclude:
+  # - ruby: 3.0
+  #   rails: 4.2
+  # - ruby: jruby-9.3
+  #   rails: 7.0
+```
 
 ## Development
 
