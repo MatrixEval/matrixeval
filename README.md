@@ -49,6 +49,8 @@ Run `matrixeval --help` for more details
 
 ### Configuration Example
 
+Here is the configuration file `matrixeval.yml` which will auto created by `matrixeval init`
+
 ```yaml
 version: 0.2
 target: ruby
@@ -103,6 +105,18 @@ exclude:
   # - ruby: jruby-9.3
   #   rails: 7.0
 ```
+
+### Gemfile configuration example
+
+Here is an example from [ruby-trello](https://github.com/jeremytregunna/ruby-trello)
+
+```ruby
+if active_model_version = ENV['ACTIVE_MODEL_VERSION']
+  gem 'activemodel', active_model_version
+end
+```
+
+You can also check its corresponding [`matrixeval.yml`](https://github.com/jeremytregunna/ruby-trello/blob/master/matrixeval.yml)
 
 ## Development
 
