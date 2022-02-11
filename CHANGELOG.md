@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.2.1] - 2022-02-11
+
+- Fix a assignment method issue
+
 ## [0.2.0] - 2022-02-10
 
 - Change config format from 0.1 to 0.2
