@@ -95,11 +95,11 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
     assert_equal ['rake', 'rspec', 'bundle', 'bash', 'ls'], Matrixeval::Ruby::Config.commands
   end
 
-  def test_docker_compose_extend
-    compose_extend = Matrixeval::Ruby::Config.docker_compose_extend
-    assert compose_extend.is_a?(Matrixeval::Ruby::DockerComposeExtend)
+  def test_docker_compose_extend_raw
+    extend_raw = Matrixeval::Ruby::Config.docker_compose_extend_raw
+    assert extend_raw.is_a?(Matrixeval::Ruby::DockerCompose::ExtendRaw)
 
-    assert_equal "{\"volumes\":{\"postgres12-<%= matrix_combination_id %>\":null}}", compose_extend.raw
+    assert_equal "{\"volumes\":{\"postgres12-<%= matrix_combination_id %>\":null}}", extend_raw.content
   end
 
 end

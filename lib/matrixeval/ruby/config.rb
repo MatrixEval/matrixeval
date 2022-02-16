@@ -1,7 +1,7 @@
 require 'yaml'
 require_relative "./vector"
 require_relative "./config/yaml"
-require_relative "./docker_compose_extend"
+require_relative "./docker_compose/extend_raw"
 
 module Matrixeval
   module Ruby
@@ -55,8 +55,8 @@ module Matrixeval
           COMMANDS + cmds
         end
 
-        def docker_compose_extend
-          DockerComposeExtend.new(
+        def docker_compose_extend_raw
+          DockerCompose::ExtendRaw.new(
             YAML["docker-compose-extend"] || {}
           )
         end
