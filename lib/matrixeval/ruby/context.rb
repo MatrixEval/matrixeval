@@ -1,4 +1,5 @@
 require_relative "./context/find_by_command_options"
+require_relative "./context/build_docker_compose_extend"
 
 module Matrixeval
   module Ruby
@@ -70,6 +71,10 @@ module Matrixeval
             true
           end
         end
+      end
+
+      def docker_compose_extend
+        BuildDockerComposeExtend.call(self)
       end
 
     end

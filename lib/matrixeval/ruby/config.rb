@@ -2,6 +2,7 @@ require 'yaml'
 require_relative "./vector"
 require_relative "./config/yaml"
 require_relative "./docker_compose/extend_raw"
+require_relative "./docker_compose/extend"
 
 module Matrixeval
   module Ruby
