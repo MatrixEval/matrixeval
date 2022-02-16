@@ -8,7 +8,11 @@ module Matrixeval
         end
 
         def volumes
-          @config["volumes"] || []
+          @config["volumes"] || {}
+        end
+
+        def services
+          @config["services"] || {}
         end
 
       end
