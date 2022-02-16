@@ -1,6 +1,7 @@
 require 'yaml'
 require_relative "./vector"
 require_relative "./config/yaml"
+require_relative "./docker_compose_extend"
 
 module Matrixeval
   module Ruby
@@ -52,6 +53,12 @@ module Matrixeval
         def commands
           cmds = YAML["commands"] || []
           COMMANDS + cmds
+        end
+
+        def docker_compose_extend
+          DockerComposeExtend.new(
+            YAML["docker-compose-extend"] || {}
+          )
         end
 
       end

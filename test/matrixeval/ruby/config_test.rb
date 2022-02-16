@@ -25,7 +25,12 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
       "exclude" => [
         { "ruby" => "3.0", "active_model" => "7.0" },
         { "ruby" => "3.1", "active_model" => "6.1" }
-      ]
+      ],
+      "docker-compose-extend" => {
+        "volumes" => {
+          "postgres12-<%= matrix_combination_id %>" => nil
+        }
+      }
     })
   end
 
@@ -88,6 +93,13 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
 
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({'commands' => ['ls']})
     assert_equal ['rake', 'rspec', 'bundle', 'bash', 'ls'], Matrixeval::Ruby::Config.commands
+  end
+
+  def test_docker_compose_extend
+    compose_extend = Matrixeval::Ruby::Config.docker_compose_extend
+    assert compose_extend.is_a?(Matrixeval::Ruby::DockerComposeExtend)
+
+    assert_equal "{\"volumes\":{\"postgres12-<%= matrix_combination_id %>\":null}}", compose_extend.raw
   end
 
 end
