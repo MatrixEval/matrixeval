@@ -8,6 +8,7 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
       "version" => "0.2",
       "target" => "ruby",
+      "project_name" => "sample app",
       "matrix" => {
         "ruby" => {
           "variants" => [
@@ -40,6 +41,10 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
 
   def test_target
     assert_equal "ruby", Matrixeval::Ruby::Config.target
+  end
+
+  def project_name
+    assert_equal "sampe_app", Matrixeval::Ruby::Config.project_name
   end
 
   def test_vectors

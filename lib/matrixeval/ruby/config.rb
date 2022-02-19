@@ -17,6 +17,16 @@ module Matrixeval
           YAML["target"]
         end
 
+        def project_name
+          name = YAML["project_name"]
+
+          if name.nil? || name.strip.empty?
+            raise Error.new('missing project_name')
+          end
+
+          name
+        end
+
         def vectors
           @vectors = YAML["matrix"].map do |key, vector_config|
             Vector.new(key, vector_config)
