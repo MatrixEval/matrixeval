@@ -6,12 +6,6 @@ module Matrixeval
   module Ruby
     class DockerCompose
 
-      class << self
-        def clean_containers
-          system("docker compose -f .matrixeval/docker-compose.yml rm --all -f >> /dev/null 2>&1")
-        end
-      end
-
       attr_reader :context
 
       def initialize(context)
@@ -23,30 +17,29 @@ module Matrixeval
 
         system(
           <<~DOCKER_COMPOSE_COMMAND
-          docker compose -f .matrixeval/docker-compose.yml \
+          docker compose -f #{yaml_file} \
           run --rm \
-          #{env} \
-          #{gemfile_mount} \
-          #{docker_compose_service_name} \
+          #{context.docker_compose_service_name} \
           #{forward_arguments}
           DOCKER_COMPOSE_COMMAND
         )
+      ensure
+        turn_on_stty_opost
+        clean_linked_containers
       end
 
       private
 
-      def env
-        context.env.map do |k, v|
-          "-e #{k}='#{v}'"
-        end.join(" ")
+      def clean_linked_containers
+        system("docker compose -f #{yaml_file} down >> /dev/null 2>&1")
       end
 
-      def gemfile_mount
-        "-v ./.matrixeval/Gemfile.lock.#{context.id}:/app/Gemfile.lock"
+      def yaml_file
+        ".matrixeval/docker-compose/#{context.id}.yml"
       end
 
-      def docker_compose_service_name
-        context.docker_compose_service_name
+      def turn_on_stty_opost
+        system("stty opost")
       end
 
     end

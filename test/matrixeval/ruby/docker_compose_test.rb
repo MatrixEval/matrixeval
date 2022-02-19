@@ -41,22 +41,18 @@ class Matrixeval::Ruby::DockerComposeTest < MatrixevalTest
       ]
     )
     docker_compose = Matrixeval::Ruby::DockerCompose.new(context)
+
     expected_docker_compose_command = <<~COMMAND
-      docker compose -f .matrixeval/docker-compose.yml \
-      run --rm \
-      -e RAILS_VERSION='6.0.0' \
-      -e SIDEKIQ_VERSION='5.0.0' \
-      -v ./.matrixeval/Gemfile.lock.ruby_3_0_rails_6_0_sidekiq_5_0:/app/Gemfile.lock \
-      ruby_3_0 \
-      rake test
+      docker compose -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      run --rm ruby_3_0 rake test
       COMMAND
     docker_compose.expects(:system).with(expected_docker_compose_command)
-    docker_compose.run(["rake", "test"])
-  end
 
-  def test_clean_containers
-    Matrixeval::Ruby::DockerCompose.expects(:system).with("docker compose -f .matrixeval/docker-compose.yml rm --all -f >> /dev/null 2>&1")
-    Matrixeval::Ruby::DockerCompose.clean_containers
+    docker_compose.expects(:system).with("stty opost")
+
+    docker_compose.expects(:system).with("docker compose -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml down >> /dev/null 2>&1")
+
+    docker_compose.run(["rake", "test"])
   end
 
 end
