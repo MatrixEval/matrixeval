@@ -17,5 +17,9 @@ class MatrixevalTestSupport
       dummy_gem_working_dir.join(".matrixeval/docker-compose.yml")
     end
 
+    def dummy_gem_docker_compose_folder_path
+      dummy_gem_working_dir.join(".matrixeval/docker-compose")
+    end
+
   end
 end

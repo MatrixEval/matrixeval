@@ -1,5 +1,6 @@
 
 require_relative "./docker_compose/yaml"
+require_relative "./docker_compose/file"
 
 module Matrixeval
   module Ruby
