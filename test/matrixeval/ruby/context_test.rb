@@ -64,6 +64,12 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
     assert_equal "working_dir/.matrixeval/Gemfile.lock.ruby_3_0_rails_6_1_sidekiq_5_0", @context.gemfile_lock_path.to_s
   end
 
+  def test_docker_compose_file_path
+    Matrixeval.stubs(:working_dir).returns(Pathname.new("working_dir"))
+
+    assert_equal "working_dir/.matrixeval/docker-compose/ruby_3_0_rails_6_1_sidekiq_5_0.yml", @context.docker_compose_file_path.to_s
+  end
+
   def test_variants
     assert_equal 3, @context.variants.count
     assert_equal "ruby", @context.variants[0].vector.key

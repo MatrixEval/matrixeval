@@ -56,6 +56,10 @@ module Matrixeval
         Matrixeval.working_dir.join(".matrixeval/Gemfile.lock.#{id}")
       end
 
+      def docker_compose_file_path
+        Matrixeval.working_dir.join(".matrixeval/docker-compose/#{id}.yml")
+      end
+
       def variants
         [main_variant] + rest_variants
       end
