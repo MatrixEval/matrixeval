@@ -66,7 +66,7 @@ module Matrixeval
 
       def run_all_contexts
         Config::YAML.create
-        DockerCompose::YAML.create
+        DockerCompose::File.create_all
         GemfileLocks.create
         Gitignore.update
 
@@ -110,7 +110,7 @@ module Matrixeval
 
       def run_a_specific_context
         Config::YAML.create
-        DockerCompose::YAML.create
+        DockerCompose::File.create_all
         GemfileLocks.create
         Gitignore.update
 
