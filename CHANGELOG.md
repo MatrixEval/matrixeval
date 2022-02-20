@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.3.0] - 2022-02-21
+
+- Support add extra docker compose services and volumes
+- Isolate each job with docker compose project name and network
+
 ## [0.2.2] - 2022-02-11
 
 - Auto remove containers
