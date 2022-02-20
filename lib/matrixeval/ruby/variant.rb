@@ -9,7 +9,7 @@ module Matrixeval
         end
       end
 
-      attr_reader :key, :env, :vector, :default, :container
+      attr_reader :key, :env, :vector, :default, :container, :mounts
 
       def initialize(config = {}, vector)
         raise Error.new("Variant#key is missing") if config["key"].nil?
@@ -19,6 +19,7 @@ module Matrixeval
         @container = Container.new(config["container"])
         @env = config["env"] || {}
         @default = config["default"] || false
+        @mounts = config["mounts"] || []
       end
 
       def name

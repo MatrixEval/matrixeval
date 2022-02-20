@@ -26,8 +26,23 @@ class Matrixeval::Ruby::VariantTest < MatrixevalTest
   end
 
   def test_env
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "env" => { 'A' => 'a' }}, @vector)
+    assert_equal({'A' => 'a'}, variant.env)
+  end
+
+  def test_env_default
     variant = Matrixeval::Ruby::Variant.new({"key" => 3.1}, @vector)
     assert_equal({}, variant.env)
+  end
+
+  def test_mounts
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1, "mounts" => [".matrixeval/schema/rails_6.1.rb:/app/db/schema.rb"]}, @vector)
+    assert_equal([".matrixeval/schema/rails_6.1.rb:/app/db/schema.rb"], variant.mounts)
+  end
+
+  def test_mounts_default
+    variant = Matrixeval::Ruby::Variant.new({"key" => 3.1}, @vector)
+    assert_equal([], variant.mounts)
   end
 
   def test_vector
