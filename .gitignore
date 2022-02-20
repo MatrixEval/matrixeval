@@ -10,5 +10,6 @@
 test/dummy_gem/matrixeval.yml
 test/dummy_gem/.matrixeval
 test/dummy_gem/.gitignore
+test/dummy_gem/mount.txt
 .byebug_history
 Gemfile.lock

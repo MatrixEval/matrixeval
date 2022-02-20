@@ -5,6 +5,7 @@ require 'rainbow'
 require 'matrixeval/ruby/docker_compose'
 require 'matrixeval/ruby/context'
 require 'matrixeval/ruby/gemfile_locks'
+require 'matrixeval/ruby/extra_mount_files'
 require 'matrixeval/ruby/runner'
 require 'matrixeval/ruby/gitignore'
 
