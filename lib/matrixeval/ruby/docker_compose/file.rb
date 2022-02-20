@@ -42,14 +42,9 @@ module Matrixeval
         def build_content
           {
             "version" => "3",
-            "networks" => { network => nil },
             "services" => services_json,
             "volumes" => volumes_json
           }.to_yaml.sub(/---\n/, "")
-        end
-
-        def network
-          "matrixeval-#{context.id}"
         end
 
         def services_json
@@ -64,12 +59,11 @@ module Matrixeval
               "BUNDLE_APP_CONFIG" => "/bundle",
               "BUNDLE_BIN" => "/bundle/bin",
               "PATH" => "/app/bin:/bundle/bin:$PATH"
-            }.merge(context.env).merge(main_variant.container.env),
-            "working_dir" => "/app",
-            "networks" => [network],
+            }.merge(extra_env),
+            "working_dir" => "/app"
           }.merge(depends_on)
 
-          services.merge(extra_services)
+          services.merge(docker_compose_extend.services)
         end
 
         def volumes_json
@@ -88,10 +82,9 @@ module Matrixeval
           end
         end
 
-        def extra_services
-          docker_compose_extend.services.map do |name, config|
-            [name, config.merge({'networks' => [network]})]
-          end.to_h
+        def extra_env
+          Config.env.merge(context.env)
+                    .merge(main_variant.container.env)
         end
 
         def main_variant
@@ -107,7 +100,21 @@ module Matrixeval
             "../..:/app:cached",
             "#{variant.bundle_volume_name}:/bundle",
             "../Gemfile.lock.#{context.id}:/app/Gemfile.lock"
-          ] + Config.main_vector.mounts
+          ] + extra_mounts
+        end
+
+        def extra_mounts
+          mounts = Config.mounts + context.variants.map(&:mounts).flatten
+          mounts.map do |mount|
+            local_path, in_docker_path = mount.split(':')
+            next mount if Pathname.new(local_path).absolute?
+
+            local_path = Matrixeval.working_dir.join(local_path)
+            docker_compose_folder_path = Matrixeval.working_dir.join(".matrixeval/docker-compose")
+            local_path = local_path.relative_path_from docker_compose_folder_path
+
+            "#{local_path}:#{in_docker_path}"
+          end
         end
 
         def docker_compose_extend
