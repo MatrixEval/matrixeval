@@ -69,6 +69,7 @@ module Matrixeval
         DockerCompose::File.create_all
         GemfileLocks.create
         Gitignore.update
+        ExtraMountFiles.create
 
         pull_all_images
 
@@ -113,6 +114,7 @@ module Matrixeval
         DockerCompose::File.create_all
         GemfileLocks.create
         Gitignore.update
+        ExtraMountFiles.create
 
         context = Context.find_by_command_options!(command.context_options)
 

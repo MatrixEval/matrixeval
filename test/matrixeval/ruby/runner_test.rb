@@ -24,14 +24,32 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
   def test_start_first_time
     FileUtils.rm(dummy_gem_matrixeval_file_path) rescue nil
     Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND
-      docker compose -f .matrixeval/docker-compose.yml \
-      run --rm \
-       \
-      -v ./.matrixeval/Gemfile.lock.ruby_3_0:/app/Gemfile.lock \
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0.yml \
+      -p matrixeval-replace_me-ruby_3_0 \
+      run --rm --no-TTY \
       ruby_3_0 \
       rake test
       COMMAND
     )
+
+    Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0.yml \
+      -p matrixeval-replace_me-ruby_3_0 \
+      stop >> /dev/null 2>&1
+      COMMAND
+    )
+
+    Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0.yml \
+      -p matrixeval-replace_me-ruby_3_0 \
+      rm -v -f >> /dev/null 2>&1
+      COMMAND
+    )
+
+    Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with("stty opost")
 
     Matrixeval::Ruby::Runner.start(["init"])
     Matrixeval::Ruby::Runner.start(["--ruby", "3.0", "rake", "test"])
@@ -41,6 +59,7 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
     File.open(dummy_gem_matrixeval_file_path, 'w+') do |file|
       file.puts(<<~MATRIXEVAL_YAML
         version: 0.1
+        project_name: sample
         target: ruby
         parallel_workers: 1
         matrix:
@@ -76,15 +95,34 @@ class Matrixeval::Ruby::RunnerTest < MatrixevalTest
     end
 
     Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND
-      docker compose -f .matrixeval/docker-compose.yml \
-      run --rm \
-      -e RAILS_VERSION='6.0.0' \
-      -e SIDEKIQ_VERSION='5.0.0' \
-      -v ./.matrixeval/Gemfile.lock.ruby_3_0_rails_6_0_sidekiq_5_0:/app/Gemfile.lock \
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-sample-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      run --rm --no-TTY \
       ruby_3_0 \
       rake test
       COMMAND
     )
+
+    Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-sample-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      stop >> /dev/null 2>&1
+      COMMAND
+    )
+
+    Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-sample-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      rm -v -f >> /dev/null 2>&1
+      COMMAND
+    )
+
+    Matrixeval::Ruby::DockerCompose.any_instance.expects(:system).with("stty opost")
+
+
     Matrixeval::Ruby::Runner.start(["--rails", "6.0", "--sidekiq", "5.0", "rake", "test"])
   end
 
