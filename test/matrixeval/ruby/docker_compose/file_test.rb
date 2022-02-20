@@ -101,7 +101,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           name: bundle_ruby_3_0_0
         postgres12:
       DOCKER_COMPOSE
-    assert_equal expect_file_content, file_content
+    assert_equal expect_file_content.strip, file_content.strip
 
     file_content = File.read(dummy_gem_docker_compose_folder_path.join("ruby_3_0_active_model_7_0.yml"))
     expect_file_content = <<~DOCKER_COMPOSE
@@ -137,7 +137,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           name: bundle_ruby_3_0_0
         postgres12:
       DOCKER_COMPOSE
-    assert_equal expect_file_content, file_content
+    assert_equal expect_file_content.strip, file_content.strip
 
     file_content = File.read(dummy_gem_docker_compose_folder_path.join("ruby_3_1_active_model_6_1.yml"))
     expect_file_content = <<~DOCKER_COMPOSE
@@ -173,7 +173,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           name: bundle_ruby_3_1_0
         postgres12:
       DOCKER_COMPOSE
-    assert_equal expect_file_content, file_content
+    assert_equal expect_file_content.strip, file_content.strip
 
     file_content = File.read(dummy_gem_docker_compose_folder_path.join("ruby_3_1_active_model_7_0.yml"))
     expect_file_content = <<~DOCKER_COMPOSE
@@ -209,7 +209,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           name: bundle_ruby_3_1_0
         postgres12:
       DOCKER_COMPOSE
-    assert_equal expect_file_content, file_content
+    assert_equal expect_file_content.strip, file_content.strip
   end
 
 
