@@ -8,6 +8,15 @@ class Matrixeval::Ruby::CommandLineTest < MatrixevalTest
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"matrix" => {}})
   end
 
+  def test_commands
+    commands = [
+      'ruby', 'rake', 'rails', 'rspec', 'bundle',
+      'bin/rake', 'bin/rails', 'bin/rspec', 'bin/test',
+      'bash', 'dash', 'sh', 'zsh'
+    ]
+    assert_equal commands, Matrixeval::Ruby::COMMANDS
+  end
+
   def test_init?
     command = Matrixeval::Ruby::CommandLine.new(["init"])
     assert command.init?

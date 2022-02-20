@@ -2,7 +2,11 @@ require_relative "./command_line/parse_context_arguments"
 
 module Matrixeval
   module Ruby
-    COMMANDS = ['rake', 'rspec', 'bundle', 'bash']
+    COMMANDS = [
+      'ruby', 'rake', 'rails', 'rspec', 'bundle',
+      'bin/rake', 'bin/rails', 'bin/rspec', 'bin/test',
+      'bash', 'dash', 'sh', 'zsh'
+    ]
 
     class CommandLine
 
