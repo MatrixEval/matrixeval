@@ -52,17 +52,18 @@ Run `matrixeval --help` for more details
 Here is the configuration file `matrixeval.yml` which will auto created by `matrixeval init`
 
 ```yaml
-version: 0.2
+version: 0.3
+project_name: REPLACE_ME
 target: ruby
 parallel_workers: number_of_processors
 # commands:
 #   - ps
 #   - top
 #   - an_additional_command
+# mounts:
+#   - /a/path/need/to/mount:/a/path/mount/to
 matrix:
   ruby:
-    # mounts:
-    #   - /a/path/need/to/mount:/a/path/mount/to
     variants:
       - key: 2.7
         container:
@@ -77,8 +78,10 @@ matrix:
       # - key: jruby-9.3
       #   container:
       #     image: jruby:9.3
-      #     env:
+      #   env:
       #       PATH: "/opt/jruby/bin:/app/bin:/bundle/bin:$PATH"
+      #   mounts:
+      #     - /a/path/need/to/mount:/a/path/mount/to
 
   # rails:
   #   variants:

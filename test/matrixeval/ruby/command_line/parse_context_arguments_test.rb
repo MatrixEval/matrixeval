@@ -6,7 +6,7 @@ class Matrixeval::Ruby::CommandLine::ParseContextArgumentsTest < MatrixevalTest
 
   def setup
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
-      "version" => "0.2",
+      "version" => "0.3",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {
