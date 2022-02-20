@@ -14,7 +14,7 @@ module Matrixeval
           return if docker_compose_included?
 
           File.open(gitignore_path, 'a+') do |file|
-            file.puts docker_compose_yaml
+            file.puts docker_compose
           end
         end
 
@@ -28,7 +28,7 @@ module Matrixeval
 
         def docker_compose_included?
           File.exist?(gitignore_path) &&
-            File.read(gitignore_path).include?(docker_compose_yaml)
+            File.read(gitignore_path).include?(docker_compose)
         end
 
         def gemfile_locks_included?
@@ -36,8 +36,8 @@ module Matrixeval
             File.read(gitignore_path).include?(gemfile_locks)
         end
 
-        def docker_compose_yaml
-          ".matrixeval/docker-compose.yml"
+        def docker_compose
+          ".matrixeval/docker-compose"
         end
 
         def gemfile_locks

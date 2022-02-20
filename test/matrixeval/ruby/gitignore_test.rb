@@ -15,7 +15,7 @@ class Matrixeval::Ruby::GitignoreTest < MatrixevalTest
     Matrixeval::Ruby::Gitignore.update
 
     expected_gitignore_content = <<~GITIGNORE
-      .matrixeval/docker-compose.yml
+      .matrixeval/docker-compose
       .matrixeval/gemfile_locks
       GITIGNORE
     gitignore_content = File.read dummy_gem_working_dir.join(".gitignore")
@@ -31,7 +31,7 @@ class Matrixeval::Ruby::GitignoreTest < MatrixevalTest
 
     expected_gitignore_content = <<~GITIGNORE
       .env
-      .matrixeval/docker-compose.yml
+      .matrixeval/docker-compose
       .matrixeval/gemfile_locks
       GITIGNORE
     gitignore_content = File.read dummy_gem_working_dir.join(".gitignore")
@@ -49,7 +49,7 @@ class Matrixeval::Ruby::GitignoreTest < MatrixevalTest
     expected_gitignore_content = <<~GITIGNORE
       .env
       .matrixeval/gemfile_locks
-      .matrixeval/docker-compose.yml
+      .matrixeval/docker-compose
       GITIGNORE
     gitignore_content = File.read dummy_gem_working_dir.join(".gitignore")
     assert_equal expected_gitignore_content, gitignore_content
