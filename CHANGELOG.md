@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.1] - 2022-02-21
+
+- Add `.matrixeval/docker-compose` to `.gitignore`
+
 ## [0.3.0] - 2022-02-21
 
 - Support add extra docker compose services and volumes
