@@ -3,11 +3,10 @@ require_relative "./variant"
 module Matrixeval
   module Ruby
     class Vector
-      attr_reader :key, :variants, :mounts
+      attr_reader :key, :variants
 
       def initialize(key, config)
         @key = key.to_s
-        @mounts = config["mounts"] || []
         @variants = (config["variants"] || []).map do |variant_config|
           config = if variant_config.is_a?(Hash)
             variant_config

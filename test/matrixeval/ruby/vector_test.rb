@@ -16,11 +16,6 @@ class Matrixeval::Ruby::VectorTest < MatrixevalTest
     assert_equal "3.1", variants[0].key
   end
 
-  def test_mounts
-    vector = Matrixeval::Ruby::Vector.new('ruby', {"mounts" => ['/a', '/b']})
-    assert_equal ['/a', '/b'], vector.mounts
-  end
-
   def test_main
     vector = Matrixeval::Ruby::Vector.new('ruby', {})
     assert vector.main?
