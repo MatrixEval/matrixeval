@@ -9,6 +9,7 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
       "version" => "0.2",
       "target" => "ruby",
       "project_name" => "sample app",
+      "mounts" => ["/a:/b"],
       "matrix" => {
         "ruby" => {
           "variants" => [
@@ -18,8 +19,8 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
         },
         "active_model" => {
           "variants" => [
-            { "key" => "6.1" },
-            { "key" => "7.0" }
+            { "key" => "6.1", "mounts" => [".matrixeval/schema/rails_6_1.rb:/app/test/dummy/db/schema.rb"] },
+            { "key" => "7.0", "mounts" => [".matrixeval/schema/rails_7_0.rb:/app/test/dummy/db/schema.rb"] }
           ]
         }
       },
@@ -43,8 +44,36 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
     assert_equal "ruby", Matrixeval::Ruby::Config.target
   end
 
-  def project_name
-    assert_equal "sampe_app", Matrixeval::Ruby::Config.project_name
+  def test_project_name
+    assert_equal "sample app", Matrixeval::Ruby::Config.project_name
+  end
+
+  def test_env
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"env" => { 'A' => 'a' }})
+    assert_equal({'A' => 'a'}, Matrixeval::Ruby::Config.env)
+  end
+
+  def test_env_default
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({})
+    assert_equal({}, Matrixeval::Ruby::Config.env)
+  end
+
+  def test_mounts
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"mounts" => ["/a:/b"]})
+    assert_equal ["/a:/b"], Matrixeval::Ruby::Config.mounts
+  end
+
+  def test_mounts_default
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({})
+    assert_equal [], Matrixeval::Ruby::Config.mounts
+  end
+
+  def test_all_mounts
+    assert_equal([
+      "/a:/b",
+      ".matrixeval/schema/rails_6_1.rb:/app/test/dummy/db/schema.rb",
+      ".matrixeval/schema/rails_7_0.rb:/app/test/dummy/db/schema.rb"
+    ], Matrixeval::Ruby::Config.all_mounts)
   end
 
   def test_vectors
@@ -94,10 +123,19 @@ class Matrixeval::Ruby::ConfigTest < MatrixevalTest
 
   def test_commands
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({})
-    assert_equal ['rake', 'rspec', 'bundle', 'bash'], Matrixeval::Ruby::Config.commands
+    assert_equal([
+      'ruby', 'rake', 'rails', 'rspec', 'bundle',
+      'bin/rake', 'bin/rails', 'bin/rspec', 'bin/test',
+      'bash', 'dash', 'sh', 'zsh'
+    ], Matrixeval::Ruby::Config.commands)
 
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({'commands' => ['ls']})
-    assert_equal ['rake', 'rspec', 'bundle', 'bash', 'ls'], Matrixeval::Ruby::Config.commands
+    assert_equal([
+      'ruby', 'rake', 'rails', 'rspec', 'bundle',
+      'bin/rake', 'bin/rails', 'bin/rspec', 'bin/test',
+      'bash', 'dash', 'sh', 'zsh',
+      'ls'
+    ], Matrixeval::Ruby::Config.commands)
   end
 
   def test_docker_compose_extend_raw

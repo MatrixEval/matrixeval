@@ -72,6 +72,26 @@ module Matrixeval
           )
         end
 
+        def env
+          YAML["env"] || {}
+        end
+
+        def mounts
+          YAML["mounts"] || []
+        end
+
+        def all_mounts
+          mounts + all_variant_mounts
+        end
+
+        private
+
+        def all_variant_mounts
+          Config.vectors
+                .map(&:variants).flatten
+                .map(&:mounts).flatten
+        end
+
       end
     end
   end
