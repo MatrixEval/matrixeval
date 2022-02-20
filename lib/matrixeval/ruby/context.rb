@@ -53,7 +53,7 @@ module Matrixeval
       end
 
       def gemfile_lock_path
-        Matrixeval.working_dir.join(".matrixeval/Gemfile.lock.#{id}")
+        Matrixeval.working_dir.join(".matrixeval/gemfile_locks/#{id}")
       end
 
       def docker_compose_file_path

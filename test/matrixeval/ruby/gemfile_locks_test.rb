@@ -5,13 +5,13 @@ require "test_helper"
 class Matrixeval::Ruby::GemfileLocksTest < MatrixevalTest
 
   def setup
-    FileUtils.rm Dir.glob(dummy_gem_working_dir.join(".matrixeval/Gemfile.lock.*"))
+    FileUtils.rm Dir.glob(dummy_gem_working_dir.join(".matrixeval/gemfile_locks/*"))
     Matrixeval.stubs(:working_dir).returns(dummy_gem_working_dir)
   end
 
   def test_create
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
-      "version" => "0.2",
+      "version" => "0.3",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {
@@ -42,8 +42,8 @@ class Matrixeval::Ruby::GemfileLocksTest < MatrixevalTest
     assert File.exist? gemfile_lock("ruby_3_1_rails_6_1")
   end
 
-  def gemfile_lock(suffix)
-    dummy_gem_working_dir.join(".matrixeval/Gemfile.lock.#{suffix}")
+  def gemfile_lock(filename)
+    dummy_gem_working_dir.join(".matrixeval/gemfile_locks/#{filename}")
   end
 
 end

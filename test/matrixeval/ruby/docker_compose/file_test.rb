@@ -13,7 +13,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
     refute File.exist?(dummy_gem_docker_compose_folder_path)
 
     Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
-      "version" => "0.2",
+      "version" => "0.3",
       "target" => "ruby",
       "project_name" => "Dummy_gem",
       "mounts" => ["/a/b:/app/c/d"],
@@ -76,7 +76,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           volumes:
           - "../..:/app:cached"
           - bundle_ruby_3_0_0:/bundle
-          - "../Gemfile.lock.ruby_3_0_active_model_6_1:/app/Gemfile.lock"
+          - "../gemfile_locks/ruby_3_0_active_model_6_1:/app/Gemfile.lock"
           - "/a/b:/app/c/d"
           - "../schema/rails_6_1.rb:/app/test/dummy/db/schema.rb"
           environment:
@@ -112,7 +112,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           volumes:
           - "../..:/app:cached"
           - bundle_ruby_3_0_0:/bundle
-          - "../Gemfile.lock.ruby_3_0_active_model_7_0:/app/Gemfile.lock"
+          - "../gemfile_locks/ruby_3_0_active_model_7_0:/app/Gemfile.lock"
           - "/a/b:/app/c/d"
           - "../schema/rails_7_0.rb:/app/test/dummy/db/schema.rb"
           environment:
@@ -148,7 +148,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           volumes:
           - "../..:/app:cached"
           - bundle_ruby_3_1_0:/bundle
-          - "../Gemfile.lock.ruby_3_1_active_model_6_1:/app/Gemfile.lock"
+          - "../gemfile_locks/ruby_3_1_active_model_6_1:/app/Gemfile.lock"
           - "/a/b:/app/c/d"
           - "../schema/rails_6_1.rb:/app/test/dummy/db/schema.rb"
           environment:
@@ -184,7 +184,7 @@ class Matrixeval::Ruby::DockerCompose::FileTest < MatrixevalTest
           volumes:
           - "../..:/app:cached"
           - bundle_ruby_3_1_0:/bundle
-          - "../Gemfile.lock.ruby_3_1_active_model_7_0:/app/Gemfile.lock"
+          - "../gemfile_locks/ruby_3_1_active_model_7_0:/app/Gemfile.lock"
           - "/a/b:/app/c/d"
           - "../schema/rails_7_0.rb:/app/test/dummy/db/schema.rb"
           environment:

@@ -41,7 +41,7 @@ module Matrixeval
         end
 
         def gemfile_locks
-          ".matrixeval/Gemfile.lock.*"
+          ".matrixeval/gemfile_locks"
         end
 
         def gitignore_path

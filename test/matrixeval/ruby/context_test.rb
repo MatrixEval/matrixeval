@@ -61,7 +61,7 @@ class Matrixeval::Ruby::ContextTest < MatrixevalTest
   def test_gemfile_lock_path
     Matrixeval.stubs(:working_dir).returns(Pathname.new("working_dir"))
 
-    assert_equal "working_dir/.matrixeval/Gemfile.lock.ruby_3_0_rails_6_1_sidekiq_5_0", @context.gemfile_lock_path.to_s
+    assert_equal "working_dir/.matrixeval/gemfile_locks/ruby_3_0_rails_6_1_sidekiq_5_0", @context.gemfile_lock_path.to_s
   end
 
   def test_docker_compose_file_path

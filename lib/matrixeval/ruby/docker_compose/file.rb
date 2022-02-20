@@ -99,7 +99,7 @@ module Matrixeval
           [
             "../..:/app:cached",
             "#{variant.bundle_volume_name}:/bundle",
-            "../Gemfile.lock.#{context.id}:/app/Gemfile.lock"
+            "../gemfile_locks/#{context.id}:/app/Gemfile.lock"
           ] + extra_mounts
         end
 
