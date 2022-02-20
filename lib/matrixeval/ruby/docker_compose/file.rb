@@ -126,7 +126,7 @@ module Matrixeval
         end
 
         def project_name
-          Config.project_name.gsub(/[^A-Za-z0-9]/,'_').downcase
+          Config.project_name.gsub(/[^A-Za-z0-9-]/,'_').downcase
         end
 
       end

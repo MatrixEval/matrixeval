@@ -12,25 +12,43 @@ module Matrixeval
       end
 
       def run(arguments)
-        forward_arguments = arguments.join(" ")
+        forward_arguments = arguments.map do |arg|
+          arg.match(/\s/) ? "\"#{arg}\"" : arg
+        end.join(" ")
+
+        no_tty = %w[bash sh zsh dash].include?(arguments[0]) ? '' : '--no-TTY' 
 
         system(
           <<~DOCKER_COMPOSE_COMMAND
-          docker compose -f #{yaml_file} \
+          #{docker_compose} \
           run --rm \
+          #{no_tty} \
           #{context.docker_compose_service_name} \
           #{forward_arguments}
           DOCKER_COMPOSE_COMMAND
         )
       ensure
+        stop_containers
+        clean_containers_and_anonymous_volumes
         turn_on_stty_opost
-        clean_linked_containers
       end
 
       private
 
-      def clean_linked_containers
-        system("docker compose -f #{yaml_file} down >> /dev/null 2>&1")
+      def stop_containers
+        system("#{docker_compose} stop >> /dev/null 2>&1")
+      end
+
+      def clean_containers_and_anonymous_volumes
+        system("#{docker_compose} rm -v -f >> /dev/null 2>&1")
+      end
+
+      def docker_compose
+        <<~DOCKER_COMPOSE_COMMAND.strip
+        docker --log-level error compose \
+        -f #{yaml_file} \
+        -p matrixeval-#{project_name}-#{context.id}
+        DOCKER_COMPOSE_COMMAND
       end
 
       def yaml_file
@@ -39,6 +57,10 @@ module Matrixeval
 
       def turn_on_stty_opost
         system("stty opost")
+      end
+
+      def project_name
+        Config.project_name.gsub(/[^A-Za-z0-9-]/,'_').downcase
       end
 
     end

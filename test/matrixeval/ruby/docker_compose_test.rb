@@ -11,6 +11,8 @@ class Matrixeval::Ruby::DockerComposeTest < MatrixevalTest
   end
 
   def test_run
+    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({"project_name" => "dummy app"})
+
     context = Matrixeval::Ruby::Context.new(
       main_variant: Matrixeval::Ruby::Variant.new(
         {
@@ -42,15 +44,32 @@ class Matrixeval::Ruby::DockerComposeTest < MatrixevalTest
     )
     docker_compose = Matrixeval::Ruby::DockerCompose.new(context)
 
-    expected_docker_compose_command = <<~COMMAND
-      docker compose -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
-      run --rm ruby_3_0 rake test
+    docker_compose.expects(:system).with(<<~COMMAND
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-dummy_app-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      run --rm --no-TTY \
+      ruby_3_0 rake test
       COMMAND
-    docker_compose.expects(:system).with(expected_docker_compose_command)
+    )
+
+    docker_compose.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-dummy_app-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      stop >> /dev/null 2>&1
+      COMMAND
+    )
+
+    docker_compose.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-dummy_app-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      rm -v -f >> /dev/null 2>&1
+      COMMAND
+    )
 
     docker_compose.expects(:system).with("stty opost")
-
-    docker_compose.expects(:system).with("docker compose -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml down >> /dev/null 2>&1")
 
     docker_compose.run(["rake", "test"])
   end
