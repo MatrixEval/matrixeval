@@ -4,16 +4,16 @@ module Matrixeval
 
     def initialize(key, config)
       @key = key.to_s
+      @main = !!config["main"]
       @variants = (config["variants"] || []).map do |variant_config|
-        config = if variant_config.is_a?(Hash)
+        _config = if variant_config.is_a?(Hash)
           variant_config
         else
           { "key" => variant_config.to_s }
         end
 
-        Variant.new(config, self)
+        Variant.new(_config, self)
       end
-      @main = !!config["main"]
     end
 
     def main?
