@@ -8,14 +8,13 @@ module Matrixeval
 
       class << self
 
-        def create
+        def create_for(target_name)
           return if File.exist?(path)
 
-          FileUtils.cp(template_path, path)
-        end
-
-        def template_path
-          Config.target.matrixeval_yml_template_path
+          FileUtils.cp(
+            target(target_name).matrixeval_yml_template_path,
+            path
+          )
         end
 
         def path
@@ -30,6 +29,12 @@ module Matrixeval
           raise MissingError unless File.exist?(path)
 
           ::YAML.load File.read(path)
+        end
+
+        private
+
+        def target(target_name)
+          Matrixeval.targets[target_name] || Target
         end
 
       end

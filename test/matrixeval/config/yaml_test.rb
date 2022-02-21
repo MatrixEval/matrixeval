@@ -12,7 +12,7 @@ class Matrixeval::Config::YAMLTest < MatrixevalTest
   def test_creating_dot_matrixeval_yaml
     refute File.exist?(dummy_gem_matrixeval_file_path)
 
-    Matrixeval::Config::YAML.create
+    Matrixeval::Config::YAML.create_for(nil)
 
     assert File.exist?(dummy_gem_matrixeval_file_path)
   end
@@ -22,7 +22,7 @@ class Matrixeval::Config::YAMLTest < MatrixevalTest
       file.puts "Customizations"
     end
 
-    Matrixeval::Config::YAML.create
+    Matrixeval::Config::YAML.create_for(nil)
 
     assert_equal "Customizations\n", File.read(dummy_gem_matrixeval_file_path)
   end
@@ -58,7 +58,7 @@ class Matrixeval::Config::YAMLTest < MatrixevalTest
   def test_template_path
     File.open(dummy_gem_matrixeval_file_path, "w+") { |file| file.puts "content" }
     expected_path = File.expand_path working_dir.join("lib/matrixeval/templates/matrixeval.yml")
-    actaul_path = File.expand_path Matrixeval::Config::YAML.template_path
+    actaul_path = File.expand_path Matrixeval::Target.matrixeval_yml_template_path
     assert_equal expected_path, actaul_path
   end
 
