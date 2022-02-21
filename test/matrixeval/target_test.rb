@@ -25,4 +25,8 @@ class Matrixeval::TargetTest < MatrixevalTest
     assert_equal({}, Matrixeval::Target.volumes(context))
   end
 
+  def test_gitignore_paths
+    assert_equal [], Matrixeval::Target.gitignore_paths
+  end
+
 end

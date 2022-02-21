@@ -22,6 +22,10 @@ module Matrixeval
         {}
       end
 
+      def gitignore_paths
+        []
+      end
+
     end
   end
 end
