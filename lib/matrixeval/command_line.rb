@@ -1,4 +1,5 @@
 require_relative "./command_line/parse_context_arguments"
+require_relative "./command_line/parse_init_arguments"
 
 module Matrixeval
 
@@ -20,6 +21,10 @@ module Matrixeval
 
     def init?
       @argv[0] == 'init'
+    end
+
+    def init_options
+      @init_options ||= ParseInitArguments.call(@argv[1..-1])
     end
 
     def all?

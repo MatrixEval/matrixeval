@@ -49,6 +49,13 @@ class Matrixeval::CommandLineTest < MatrixevalTest
     assert_equal ["bash"], command.rest_arguments
   end
 
+  def test_init_options
+    Matrixeval::CommandLine::ParseInitArguments.expects(:call).with(["--target", "ruby"]).returns({target: "ruby"})
+
+    command = Matrixeval::CommandLine.new(["init", "--target", "ruby"])
+    assert_equal({target: "ruby"}, command.init_options)
+  end
+
   def test_context_options
     Matrixeval::CommandLine::ParseContextArguments.expects(:call).with(["--ruby", "3.0"]).returns({ruby: "3.0"})
 
