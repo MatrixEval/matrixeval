@@ -1,13 +1,15 @@
-# matrixeval-ruby
+# MatrixEval
 
-Test your ruby code against multiple versions of dependencies like Ruby, Rails, Env ...
-
-![](https://raw.githubusercontent.com/MatrixEval/assets/main/screenshots/summary.png)
+Test your code against multiple versions of dependencies like:
+- Programming language version
+- Framework version
+- Package version
+- Environment variables
 
 ## Features
 
-- Parallel test your ruby code against multiple versions of dependencies combinations.
-- Test your ruby code against a specific dependencies combination.
+- Parallel test your code against multiple versions of dependencies combinations.
+- Test your code against a specific dependencies combination.
 - Choose any docker image you like for each job.
 - Easy to use CLI to speed up your development efficiency
 ## Installation
@@ -15,7 +17,7 @@ Test your ruby code against multiple versions of dependencies like Ruby, Rails, 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'matrixeval-ruby'
+gem 'matrixeval'
 ```
 
 And then execute:
@@ -24,7 +26,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install matrixeval-ruby
+    $ gem install matrixeval
 
 ## Usage
 
@@ -37,15 +39,11 @@ matrixeval init
 Customize `matrixeval.yml` file and run commands like:
 
 ```bash
-matrixeval --all bundle install
-matrixeval --all rspec
-matrixeval --ruby 3.0 rspec a_spec.rb
-matrixeval --ruby 3.1 --rails 7.0 rake test
+matrixeval --all COMMAND
+matrixeval --PROGRAMMING_LANGUAGE LANGUAGE_VERSION --PACKAGE_NAME PACKAGE_VERSION COMMAND OPTIONS
 matrixeval bash
 ```
 Run `matrixeval --help` for more details
-
-![](https://raw.githubusercontent.com/MatrixEval/assets/main/screenshots/help.png)
 
 ### Configuration Example
 
@@ -54,7 +52,6 @@ Here is the configuration file `matrixeval.yml` which will auto created by `matr
 ```yaml
 version: 0.3
 project_name: REPLACE_ME
-target: ruby
 parallel_workers: number_of_processors
 # commands:
 #   - ps
@@ -63,35 +60,20 @@ parallel_workers: number_of_processors
 # mounts:
 #   - /a/path/need/to/mount:/a/path/mount/to
 matrix:
-  ruby:
-    variants:
-      - key: 2.7
-        container:
-          image: ruby:2.7.1
-      - key: 3.0
-        default: true
-        container:
-          image: ruby:3.0.0
-      - key: 3.1
-        container:
-          image: ruby:3.1.0
-      # - key: jruby-9.3
-      #   container:
-      #     image: jruby:9.3
-      #   env:
-      #       PATH: "/opt/jruby/bin:/app/bin:/bundle/bin:$PATH"
-      #   mounts:
-      #     - /a/path/need/to/mount:/a/path/mount/to
-
-  # rails:
+  # YOUR_PROGRAMMING_LANGUAGE_NAME:
   #   variants:
-  #     - key: 6.1
+  #     - key: LANGUAGE_VERSION_1
   #       default: true
+  #       container:
+  #         image: LANGUAGE_DOCKER_NAME_1
+  #     - key: LANGUAGE_VERSION_2
+  #       container:
+  #         image: LANGUAGE_DOCKER_NAME_2
   #       env:
-  #         RAILS_VERSION: "~> 6.1.0"
-  #     - key: 7.0
-  #       env:
-  #         RAILS_VERSION: "~> 7.0.0"
+  #           AN_ENV_KEY: ENV_VALUE
+  #       mounts:
+  #         - /a/path/need/to/mount:/a/path/mount/to
+
   # another:
   #   variants:
   #     - key: key1
@@ -103,10 +85,8 @@ matrix:
   #         ENV_KEY: 2
 
 exclude:
-  # - ruby: 3.0
-  #   rails: 4.2
-  # - ruby: jruby-9.3
-  #   rails: 7.0
+  # - YOUR_PROGRAMMING_LANGUAGE_NAME: LANGUAGE_VERSION_1
+  #   another: key1
 
 docker-compose-extend:
   # services:
@@ -124,18 +104,6 @@ docker-compose-extend:
   #   postgres12:
 ```
 
-### Gemfile configuration example
-
-Here is an example from [ruby-trello](https://github.com/jeremytregunna/ruby-trello)
-
-```ruby
-if active_model_version = ENV['ACTIVE_MODEL_VERSION']
-  gem 'activemodel', active_model_version
-end
-```
-
-You can also check its corresponding [`matrixeval.yml`](https://github.com/jeremytregunna/ruby-trello/blob/master/matrixeval.yml)
-
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -144,7 +112,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/matrixeval/matrixeval-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/matrixeval-ruby/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/matrixeval/matrixeval. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/matrixeval/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -152,4 +120,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Matrixeval::Ruby project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/matrixeval/matrixeval-ruby/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the Matrixeval::Ruby project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/matrixeval/matrixeval/blob/main/CODE_OF_CONDUCT.md).
