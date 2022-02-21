@@ -2,35 +2,37 @@
 
 require "test_helper"
 
-class Matrixeval::Ruby::VectorTest < MatrixevalTest
+class Matrixeval::VectorTest < MatrixevalTest
 
   def test_key
-    vector = Matrixeval::Ruby::Vector.new('ruby', {})
+    vector = Matrixeval::Vector.new('ruby', {})
     assert_equal "ruby", vector.key
   end
 
   def test_variants_with_hash
-    vector = Matrixeval::Ruby::Vector.new('ruby', {"variants" => [{"key" => "3.1"}]})
+    vector = Matrixeval::Vector.new('ruby', {"variants" => [{"key" => "3.1"}]})
     variants = vector.variants
     assert_equal 1, variants.count
     assert_equal "3.1", variants[0].key
   end
 
   def test_main
-    vector = Matrixeval::Ruby::Vector.new('ruby', {})
-    assert vector.main?
+    Matrixeval::Config.stubs(:target).returns(Matrixeval::Target)
 
-    vector = Matrixeval::Ruby::Vector.new('active_model', {})
+    vector = Matrixeval::Vector.new('ruby', {})
     refute vector.main?
+
+    vector = Matrixeval::Vector.new('ruby', {"main" => true})
+    assert vector.main?
   end
 
   def test_id
-    vector = Matrixeval::Ruby::Vector.new('ruby-3.0', {})
+    vector = Matrixeval::Vector.new('ruby-3.0', {})
     assert_equal 'ruby_3_0', vector.id
   end
 
   def test_default_variant
-    vector = Matrixeval::Ruby::Vector.new('ruby', {"variants" => [{"key" => "3.0", "default" => true}, { "key" => "3.1" }]})
+    vector = Matrixeval::Vector.new('ruby', {"variants" => [{"key" => "3.0", "default" => true}, { "key" => "3.1" }]})
     variant = vector.default_variant
     assert_equal "ruby", variant.vector.key
     assert_equal "3.0", variant.key
@@ -39,7 +41,7 @@ class Matrixeval::Ruby::VectorTest < MatrixevalTest
   def test_default_variant_on_missing_default
     assert_raises "Please set a default variant for matrix ruby" do
       config = {"variants" => [{"key" => "3.0"}, { "key" => "3.1" }]}
-      Matrixeval::Ruby::Vector.new('ruby', config).default_variant
+      Matrixeval::Vector.new('ruby', config).default_variant
     end
   end
 
