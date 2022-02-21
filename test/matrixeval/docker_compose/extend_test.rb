@@ -2,10 +2,10 @@
 
 require 'test_helper'
 
-class Matrixeval::Ruby::DockerCompose::ExtendTest < MatrixevalTest
+class Matrixeval::DockerCompose::ExtendTest < MatrixevalTest
 
   def setup
-    @compose_extend = Matrixeval::Ruby::DockerCompose::Extend.new(
+    @compose_extend = Matrixeval::DockerCompose::Extend.new(
       {
         "volumes" => {
           "postgres12-ruby_3_1_rails_6_0" => nil
