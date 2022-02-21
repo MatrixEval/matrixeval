@@ -1,6 +1,5 @@
 version: 0.3
 project_name: REPLACE_ME
-target: ruby
 parallel_workers: number_of_processors
 # commands:
 #   - ps
@@ -10,6 +9,7 @@ parallel_workers: number_of_processors
 #   - /a/path/need/to/mount:/a/path/mount/to
 matrix:
   ruby:
+    main: true
     variants:
       - key: 2.7
         container:
