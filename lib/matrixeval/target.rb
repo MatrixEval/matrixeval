@@ -38,6 +38,10 @@ module Matrixeval
         []
       end
 
+      def create_files
+        # Do nothing
+      end
+
     end
   end
 end
