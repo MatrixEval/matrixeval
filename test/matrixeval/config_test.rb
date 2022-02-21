@@ -11,6 +11,7 @@ class Matrixeval::ConfigTest < MatrixevalTest
       "mounts" => ["/a:/b"],
       "matrix" => {
         "ruby" => {
+          "main" => true,
           "variants" => [
             { "key" => "3.0" },
             { "key" => "3.1" }
@@ -127,15 +128,11 @@ class Matrixeval::ConfigTest < MatrixevalTest
   def test_commands
     Matrixeval::Config::YAML.stubs(:yaml).returns({})
     assert_equal([
-      'ruby', 'rake', 'rails', 'rspec', 'bundle',
-      'bin/rake', 'bin/rails', 'bin/rspec', 'bin/test',
       'bash', 'dash', 'sh', 'zsh'
     ], Matrixeval::Config.commands)
 
     Matrixeval::Config::YAML.stubs(:yaml).returns({'commands' => ['ls']})
     assert_equal([
-      'ruby', 'rake', 'rails', 'rspec', 'bundle',
-      'bin/rake', 'bin/rails', 'bin/rspec', 'bin/test',
       'bash', 'dash', 'sh', 'zsh',
       'ls'
     ], Matrixeval::Config.commands)
