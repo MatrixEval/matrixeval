@@ -14,7 +14,7 @@ module Matrixeval
       end
 
       def target
-        Matrixeval.targets[target_name] || Target
+        @target ||= target_klass.new
       end
 
       def project_name
@@ -90,6 +90,10 @@ module Matrixeval
         Config.vectors
               .map(&:variants).flatten
               .map(&:mounts).flatten
+      end
+
+      def target_klass
+        Matrixeval.targets[target_name] || Target
       end
 
     end

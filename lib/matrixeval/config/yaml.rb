@@ -34,6 +34,10 @@ module Matrixeval
         private
 
         def target(target_name)
+          target_klass(target_name).new
+        end
+
+        def target_klass(target_name)
           Matrixeval.targets[target_name] || Target
         end
 

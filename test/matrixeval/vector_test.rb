@@ -17,7 +17,7 @@ class Matrixeval::VectorTest < MatrixevalTest
   end
 
   def test_main
-    Matrixeval::Config.stubs(:target).returns(Matrixeval::Target)
+    Matrixeval::Config.stubs(:target).returns(Matrixeval::Target.new)
 
     vector = Matrixeval::Vector.new('ruby', {})
     refute vector.main?

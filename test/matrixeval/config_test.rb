@@ -45,7 +45,7 @@ class Matrixeval::ConfigTest < MatrixevalTest
   end
 
   def test_target_default
-    assert_equal Matrixeval::Target, Matrixeval::Config.target
+    assert Matrixeval::Config.target.is_a?(Matrixeval::Target)
   end
 
   def test_project_name
