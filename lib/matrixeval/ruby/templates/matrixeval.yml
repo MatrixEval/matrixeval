@@ -53,3 +53,18 @@ exclude:
   #   rails: 4.2
   # - ruby: jruby-9.3
   #   rails: 7.0
+
+docker-compose-extend:
+  # services:
+  #   postgres:
+  #     image: postgres:12.8
+  #     volumes:
+  #       - postgres12:/var/lib/postgresql/data
+  #     environment:
+  #       POSTGRES_HOST_AUTH_METHOD: trust
+
+  #   redis:
+  #     image: redis:6.2-alpine
+
+  # volumes:
+  #   postgres12:
