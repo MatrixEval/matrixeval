@@ -2,14 +2,15 @@
 
 require "test_helper"
 
-class Matrixeval::Ruby::CommandLine::ParseContextArgumentsTest < MatrixevalTest
+class Matrixeval::CommandLine::ParseContextArgumentsTest < MatrixevalTest
 
   def setup
-    Matrixeval::Ruby::Config::YAML.stubs(:yaml).returns({
+    Matrixeval::Config::YAML.stubs(:yaml).returns({
       "version" => "0.3",
       "target" => "ruby",
       "matrix" => {
         "ruby" => {
+          "main" => true,
           "variants" => [
             { "key" => "3.0", "default" => true },
             { "key" => "3.1" }
@@ -27,7 +28,7 @@ class Matrixeval::Ruby::CommandLine::ParseContextArgumentsTest < MatrixevalTest
 
   def test_call
     context_arguments = ["--ruby", "3.0"]
-    options = Matrixeval::Ruby::CommandLine::ParseContextArguments.call(context_arguments)
+    options = Matrixeval::CommandLine::ParseContextArguments.call(context_arguments)
     assert_equal "3.0", options[:ruby]
     assert_nil options[:active_model]
   end

@@ -2,6 +2,10 @@ module Matrixeval
   class Target
     class << self
 
+      def version
+        Matrixeval::VERSION
+      end
+
       def matrixeval_yml_template_path
         Matrixeval.root.join("lib/matrixeval/templates/matrixeval.yml")
       end
@@ -23,6 +27,14 @@ module Matrixeval
       end
 
       def gitignore_paths
+        []
+      end
+
+      def support_commands
+        []
+      end
+
+      def cli_example_lines
         []
       end
 
