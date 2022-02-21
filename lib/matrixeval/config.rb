@@ -63,7 +63,7 @@ module Matrixeval
 
       def commands
         cmds = YAML["commands"] || []
-        COMMANDS + cmds
+        COMMANDS + target.support_commands + cmds
       end
 
       def docker_compose_extend_raw
