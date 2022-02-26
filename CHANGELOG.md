@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+# [0.4.2] - 2022-02-27
+
+- Fix "matrixeval init -t ruby" to use correct template
+
 # [0.4.1] - 2022-02-27
 
 - Fix a load_plugin issue
