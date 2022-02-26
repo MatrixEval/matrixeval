@@ -5,16 +5,20 @@ module Matrixeval
     class YAML
 
       class MissingError < StandardError; end
+      class MissingTargetGem < StandardError; end
 
       class << self
 
         def create_for(target_name)
           return if File.exist?(path)
+          require "matrixeval/#{target_name}" unless target_name.nil?
 
           FileUtils.cp(
             target(target_name).matrixeval_yml_template_path,
             path
           )
+        rescue LoadError
+          raise MissingTargetGem.new("Missing gem for the target #{target_name}")
         end
 
         def path
@@ -38,7 +42,7 @@ module Matrixeval
         end
 
         def target_klass(target_name)
-          Matrixeval.targets[target_name] || Target
+          Matrixeval.targets[target_name&.to_sym] || Target
         end
 
       end
