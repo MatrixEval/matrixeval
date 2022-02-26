@@ -61,6 +61,8 @@ module Matrixeval
     end
 
     def run_all_contexts
+      load_plugin
+
       DockerCompose::File.create_all
       Gitignore.update
       ExtraMountFiles.create
@@ -105,6 +107,8 @@ module Matrixeval
     end
 
     def run_a_specific_context
+      load_plugin
+
       DockerCompose::File.create_all
       Gitignore.update
       ExtraMountFiles.create
@@ -192,6 +196,11 @@ module Matrixeval
 
     def turn_on_stty_opost
       system("stty opost")
+    end
+
+    def load_plugin
+      require "matrixeval/#{Config.target_name}"
+    rescue LoadError
     end
 
   end

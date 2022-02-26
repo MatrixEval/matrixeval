@@ -93,7 +93,7 @@ module Matrixeval
       end
 
       def target_klass
-        Matrixeval.targets[target_name] || Target
+        Matrixeval.targets[target_name&.to_sym] || Target
       end
 
     end
