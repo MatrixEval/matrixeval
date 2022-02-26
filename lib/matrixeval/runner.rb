@@ -20,6 +20,8 @@ module Matrixeval
     end
 
     def start
+      load_plugin
+
       validates
 
       if command.init?
@@ -61,8 +63,6 @@ module Matrixeval
     end
 
     def run_all_contexts
-      load_plugin
-
       DockerCompose::File.create_all
       Gitignore.update
       ExtraMountFiles.create
@@ -107,8 +107,6 @@ module Matrixeval
     end
 
     def run_a_specific_context
-      load_plugin
-
       DockerCompose::File.create_all
       Gitignore.update
       ExtraMountFiles.create
@@ -200,7 +198,7 @@ module Matrixeval
 
     def load_plugin
       require "matrixeval/#{Config.target_name}"
-    rescue LoadError
+    rescue LoadError, Config::YAML::MissingError
     end
 
   end
