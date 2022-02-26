@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in matrixeval-ruby.gemspec
+# Specify your gem's dependencies in matrixeval.gemspec
 gemspec
 
 gem "rake", "~> 13.0"
