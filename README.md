@@ -28,6 +28,10 @@ Or install it yourself as:
 
     $ gem install matrixeval
 
+### Plugins
+
+If you plan to test ruby code, you can use [matrixeval-ruby](https://github.com/MatrixEval/matrixeval-ruby) directly.
+
 ## Usage
 
 Initialize
@@ -50,7 +54,7 @@ Run `matrixeval --help` for more details
 Here is the configuration file `matrixeval.yml` which will auto created by `matrixeval init`
 
 ```yaml
-version: 0.3
+version: 0.4
 project_name: REPLACE_ME
 parallel_workers: number_of_processors
 # commands:
@@ -61,6 +65,7 @@ parallel_workers: number_of_processors
 #   - /a/path/need/to/mount:/a/path/mount/to
 matrix:
   # YOUR_PROGRAMMING_LANGUAGE_NAME:
+  #   main: true
   #   variants:
   #     - key: LANGUAGE_VERSION_1
   #       default: true
