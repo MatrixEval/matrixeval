@@ -49,6 +49,14 @@ class Matrixeval::RunnerTest < MatrixevalTest
       COMMAND
     )
 
+    Matrixeval::DockerCompose.any_instance.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0.yml \
+      -p matrixeval-replace_me-ruby_3_0 \
+      down >> /dev/null 2>&1
+      COMMAND
+    )
+
     Matrixeval::DockerCompose.any_instance.expects(:system).with("stty opost")
 
     Matrixeval::Runner.start(["init"])
@@ -119,6 +127,14 @@ class Matrixeval::RunnerTest < MatrixevalTest
       -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
       -p matrixeval-sample-ruby_3_0_rails_6_0_sidekiq_5_0 \
       rm -v -f >> /dev/null 2>&1
+      COMMAND
+    )
+
+    Matrixeval::DockerCompose.any_instance.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-sample-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      down >> /dev/null 2>&1
       COMMAND
     )
 

@@ -69,6 +69,14 @@ class Matrixeval::DockerComposeTest < MatrixevalTest
       COMMAND
     )
 
+    docker_compose.expects(:system).with(<<~COMMAND.strip
+      docker --log-level error compose \
+      -f .matrixeval/docker-compose/ruby_3_0_rails_6_0_sidekiq_5_0.yml \
+      -p matrixeval-dummy_app-ruby_3_0_rails_6_0_sidekiq_5_0 \
+      down >> /dev/null 2>&1
+      COMMAND
+    )
+
     docker_compose.expects(:system).with("stty opost")
 
     docker_compose.run(["rake", "test"])

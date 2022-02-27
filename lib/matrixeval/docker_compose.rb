@@ -28,6 +28,7 @@ module Matrixeval
     ensure
       stop_containers
       clean_containers_and_anonymous_volumes
+      remove_network
       turn_on_stty_opost
     end
 
@@ -39,6 +40,10 @@ module Matrixeval
 
     def clean_containers_and_anonymous_volumes
       system("#{docker_compose} rm -v -f >> /dev/null 2>&1")
+    end
+
+    def remove_network
+      system("#{docker_compose} down >> /dev/null 2>&1")
     end
 
     def docker_compose
