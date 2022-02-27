@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+# [0.4.3] - 2022-02-27
+
+- Remove network after each job
+
 # [0.4.2] - 2022-02-27
 
 - Fix "matrixeval init -t ruby" to use correct template
