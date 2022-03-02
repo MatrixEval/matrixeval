@@ -12,6 +12,11 @@ Test your code against multiple versions of dependencies like:
 - Test your code against a specific dependencies combination.
 - Choose any docker image you like for each job.
 - Easy to use CLI to speed up your development efficiency
+
+## Requrements
+
+You need to install docker and docker compose first
+
 ## Installation
 
 Add this line to your application's Gemfile:
